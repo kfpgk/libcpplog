@@ -43,6 +43,7 @@ int main(int argc, char* argv[]) {
     test.testStreamLogLevel();
     test.testStreamTimeStamp();
     test.testStreamContext();
+    test.testStreamLogLevelTimeStampContext();
 
     std::cout << "UT: logger::logger passed." << std::endl;
     return 0;
@@ -416,6 +417,31 @@ namespace cpplog::logger::unit_test {
         std::regex expected(
             "Logger\\.test\\.cpp:testStreamContext" +
             exptected_format::lineNo + exptected_format::separator);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testStreamLogLevelTimeStampContext() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamLogLevelTimeStampContext()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << LogLevel::Error 
+               << LogStreamComponent::TimeStamp 
+               << std::source_location::current()
+               << "Rich error log message";
+
+        std::regex expected(
+            exptected_format::logLevel + exptected_format::separator +
+            exptected_format::timeStamp + exptected_format::separator + 
+            "Logger\\.test\\.cpp:testStreamLogLevelTimeStampContext" +
+            exptected_format::lineNo + exptected_format::separator +
+            "Rich error log message");
 
         DEBUG("Actual: '" << logStream.str() << "'");
 

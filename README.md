@@ -9,6 +9,11 @@ Documentation is provided in terms of <em>UML</em> diagrams located in the `doc`
 
 Refer to the [examples](#examples) for guidance on the use of this library.
 
+# Credits
+
+Credits to <em>Marius Bancila</em>. The default log format is based on his blog post 
+[Writing a simple logging function in C++20](https://mariusbancila.ro/blog/2021/07/03/writing-a-simple-logging-function-in-c20/).
+
 # Usage
 
 Debug output that results in no runtime overhead for release builds.

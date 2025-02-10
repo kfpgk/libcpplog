@@ -5,7 +5,7 @@
 
 namespace cpplog::logger {
 
-    inline LogComponent streamComponentToLogComponent(LogStreamComponent streamComponent);
+    LogComponent streamComponentToLogComponent(LogStreamComponent streamComponent);
 
 }
 

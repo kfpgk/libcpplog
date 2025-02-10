@@ -1,6 +1,7 @@
 target_sources(libcpplog
     PRIVATE
         Log.cpp
+        LogComponentOps.cpp
         Logger.cpp
         LoggerImpl.cpp
 )

@@ -411,9 +411,11 @@ namespace cpplog::logger::unit_test {
         std::stringstream logStream;
         Logger logger(logStream);
 
-        logger << LogStreamComponent::TimeStamp << std::source_location::current();
+        logger << std::source_location::current();
 
-        std::regex expected(exptected_format::timeStamp + exptected_format::separator);
+        std::regex expected(
+            "Logger\\.test\\.cpp:testStreamContext" +
+            exptected_format::lineNo + exptected_format::separator);
 
         DEBUG("Actual: '" << logStream.str() << "'");
 

@@ -38,7 +38,7 @@ namespace cpplog::debug {
 #   define DEBUG_ENTER() do { \
                 std::cerr << std::string(cpplog::debug::debugIndent, ' ' ); \
                 std::cerr << "Enter " << std::source_location::current().file_name() << ":" \
-                          << std::source_location::current().function_name() << "(" \
+                          << __func__ << "(" \
                           << std::source_location::current().line() << ":" \
                           << std::source_location::current().column() << ")" << std::endl; \
                 cpplog::debug::debugIndent++; \
@@ -61,7 +61,7 @@ namespace cpplog::debug {
                 cpplog::debug::debugIndent--; \
                 std::cerr << std::string(cpplog::debug::debugIndent, ' '); \
                 std::cerr << "Exit " << std::source_location::current().file_name() << ":" \
-                          << std::source_location::current().function_name() << "(" \
+                          << __func__ << "(" \
                           << std::source_location::current().line() << ":" \
                           << std::source_location::current().column() << ")" << std::endl; \
             } while (0)
@@ -83,7 +83,7 @@ namespace cpplog::debug {
                 cpplog::debug::debugIndent--; \
                 std::cerr << std::string(cpplog::debug::debugIndent, ' '); \
                 std::cerr << "Exit " << std::source_location::current().file_name() << ":" \
-                          << std::source_location::current().function_name() << "(" \
+                          << __func__ << "(" \
                           << std::source_location::current().line() << ":" \
                           << std::source_location::current().column() << "() - " << msg << std::endl; \
             } while (0)

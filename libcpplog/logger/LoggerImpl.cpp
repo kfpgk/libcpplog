@@ -37,7 +37,7 @@ namespace cpplog::logger {
         const std::string_view message,
         const std::source_location location) const {
 
-        log(LogLevel::Info, message, location);
+        log(defaultLogLevel, message, location);
     }
 
     void Logger::Impl::log(
@@ -53,7 +53,7 @@ namespace cpplog::logger {
         const std::string_view message,
         const std::source_location location) {
 
-        logOnce(LogLevel::Info, message, location);   
+        logOnce(defaultLogLevel, message, location);
     }
 
     void Logger::Impl::logOnce(
@@ -71,27 +71,30 @@ namespace cpplog::logger {
         }
     }
 
-    Logger::Impl& operator<<(
-        Logger::Impl& impl,
-        decltype(std::endl<char, std::char_traits<char>>) endl) {
-
-        std::scoped_lock lock(impl.outMutex);
-        impl.outStream.get() << std::endl;
-        return impl;
+    Logger::Impl& Logger::Impl::operator<<(decltype(std::endl<char, std::char_traits<char>>) endl) {
+        std::scoped_lock lock(outMutex);
+        outStream.get() << std::endl;
+        return *this;
     }
 
-    Logger::Impl& operator<<(Logger::Impl& impl, LogLevel level) {
+    Logger::Impl& Logger::Impl::operator<<(LogLevel level) {
 		LogFormat format{ LogComponent::LogLevel };
-        std::scoped_lock lock(impl.outMutex);
+        std::scoped_lock lock(outMutex);
 		// source_location does not matter here, as it is not used with this format.
-        impl.outStream.get() << impl.constructLogMessage(level, "", std::source_location::current(), format);
-		return impl;
+        outStream.get() << constructLogMessage(level, "", std::source_location::current(), format);
+		return *this;
 	}
 
-    Logger::Impl& operator<<(Logger::Impl& impl, LogComponent component) {
-		LogFormat format{ component };
-		impl.constructLogMessage(LogLevel::Info, "", std::source_location::current(), format);
-        return impl;
+    Logger::Impl& Logger::Impl::operator<<(LogStreamComponent component) {
+		LogFormat format{ streamComponentToLogComponent(component) };
+        outStream.get() << constructLogMessage(defaultLogLevel, "", std::source_location::current(), format);
+        return *this;
+    }
+
+    Logger::Impl& Logger::Impl::operator<<(std::source_location location) {
+        LogFormat format{ LogComponent::Context };
+        outStream.get() << constructLogMessage(defaultLogLevel, "", location, format);
+        return *this;
     }
 
     std::string Logger::Impl::constructLogMessage(
@@ -108,7 +111,6 @@ namespace cpplog::logger {
         const std::source_location location,
         LogFormat format) const {
 
-        DEBUG_ENTER();
         std::unique_ptr<decorator::Message> msg = std::make_unique<decorator::Message>(message);
 
         for (auto component : std::ranges::reverse_view{ format } ) {
@@ -138,7 +140,6 @@ namespace cpplog::logger {
                 break;
             }
         }
-        DEBUG_EXIT();
         return msg->getString();
     }
 

@@ -97,10 +97,47 @@ namespace cpplog::logger::unit_test {
         void testLogWithLogLevelContextLong() const;
 
         /**
-         * @brief Test basic log via stream insertion 
+         * @brief Test logging strings via stream insertion 
          * operator 
          */
-		void testStreamInsertionOperator() const;
+		void testStreamString() const;
+
+        /**
+         * @brief Test logging integers via stream insertion
+         * operator
+         */
+        void testStreamInt() const;
+
+        /**
+         * @brief Test logging floats via stream insertion
+         * operator
+         */
+        void testStreamFloat() const;
+
+        /**
+         * @brief Test logging of `std::endl` via stream insertion
+         * operator
+         */
+        void testStreamStdEndl() const;
+
+        /**
+         * @brief Test logging of log level via stream insertion
+         * operator
+         */
+        void testStreamLogLevel() const;
+
+        /**
+         * @brief Test logging of time stamp via stream insertion
+         * operator
+         */
+        void testStreamTimeStamp() const;
+
+        /**
+         * @brief Test logging of context via stream insertion
+         * operator
+         */
+        void testStreamContext() const;
+
     };
 
 }

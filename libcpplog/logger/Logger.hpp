@@ -123,21 +123,40 @@ namespace cpplog::logger {
             const std::source_location location = std::source_location::current());
 
         /**
-         * @brief Insertion operator overload for `std::endl`
-         * 
-         * `std::endl` is a templated function, hence
-         * we cannot pass it to the function template.
+         * @brief Insertion operator for strings
          */
-        friend Logger& operator<<(Logger& logger, decltype(std::endl<char, std::char_traits<char>>) endl);
+        Logger& operator<<(const std::string_view string);
 
         /**
-         * @brief Insertion operator
+         * @brief Insertion operator for floats
          */
-        template<typename T> 
-        friend Logger& operator<<(Logger& logger, const T& data) {
-            logger.pImpl << data;
-            return logger;  
-        }
+        Logger& operator<<(float value);
+
+        /**
+         * @brief Insertion operator for `std::endl`
+         */
+        Logger& operator<<(decltype(std::endl<char, std::char_traits<char>>) endl);
+
+        /**
+         * @brief Insertion operator overload for `LogLevel`
+         *
+         * Log the corresponding log level
+         */
+        Logger& operator<<(LogLevel level);
+
+        /**
+         * @brief Insertion operator overload for `LogStreamComponent`
+         *
+         * Log the corresponding component
+         */
+        Logger& operator<<(LogStreamComponent component);
+
+        /**
+         * @brief Insertion operator overload for `source_location`
+         *
+         * Log the corresponding location
+         */
+        Logger& operator<<(std::source_location location);
     
     private:
 		class Impl; ///< Pimpl idiom. Class forward declaration

@@ -54,9 +54,34 @@ namespace cpplog::logger {
         pImpl->logOnce(logLevel, message, location);
     }
 
-    Logger& operator<<(Logger& logger, decltype(std::endl<char, std::char_traits<char>>) endl) {
-        logger.pImpl << std::endl;
-        return logger;
+    Logger& Logger::operator<<(const std::string_view string) {
+        *pImpl << string;
+        return *this;
+    }
+
+    Logger& Logger::operator<<(float value) {
+        *pImpl << value;
+        return *this;
+    }
+
+    Logger& Logger::operator<<(decltype(std::endl<char, std::char_traits<char>>) endl) {
+        *pImpl << std::endl;
+        return *this;
+    }
+
+    Logger& Logger::operator<<(LogLevel level) {
+        *pImpl << level;
+        return *this;
+    }
+
+    Logger& Logger::operator<<(LogStreamComponent component) {
+        *pImpl << component;
+        return *this;
+    }
+
+    Logger& Logger::operator<<(std::source_location location) {
+        *pImpl << location;
+        return *this;
     }
 
 }

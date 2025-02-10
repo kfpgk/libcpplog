@@ -11,7 +11,7 @@ Refer to the [examples](#examples) for guidance on the use of this library.
 
 # Usage
 
-Zero release build runtime overhead debug output.
+Debug output that results in no runtime overhead for release builds.
 
 ```cpp
 #include <libcpplog/debug/Debug.hpp>

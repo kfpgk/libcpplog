@@ -16,6 +16,18 @@ namespace cpplog::logger {
         Error = 'E'
     };
 
+    namespace log_level {
+
+        /**
+         * @brief Reasonable default value for log format
+         *
+         * Default value for log format, including log level
+         * time stamp, and context information.
+         */
+        const LogLevel defaultValue{ LogLevel::Info };
+
+    }
+
 }
 
 #endif

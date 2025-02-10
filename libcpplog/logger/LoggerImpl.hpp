@@ -128,27 +128,34 @@ namespace cpplog::logger {
          * `std::endl` is a templated function, hence
          * we cannot pass it to the function template.
          */
-        friend Impl& operator<<(Impl& impl, decltype(std::endl<char, std::char_traits<char>>) endl);
+        Impl& operator<<(decltype(std::endl<char, std::char_traits<char>>) endl);
 
         /**
          * @brief Insertion operator overload for `LogLevel`
          *
          * Log the corresponding log level
          */
-        friend Impl& operator<<(Impl& impl, LogLevel level);
+        Impl& operator<<(LogLevel level);
 
         /**
-         * @brief Insertion operator overload for `LogComponent`
+         * @brief Insertion operator overload for `LogStreamComponent`
          *
          * Log the corresponding component
          */
-        friend Impl& operator<<(Impl& impl, LogComponent component);
+        Impl& operator<<(LogStreamComponent component);
+
+        /**
+         * @brief Insertion operator overload for `source_location`
+         *
+         * Log the corresponding location
+         */
+        Impl& operator<<(std::source_location location);
 
         /**
          * @brief Insertion operator
          */
         template<typename T> 
-        friend Impl& operator<<(Impl& impl, const T& data);
+        Impl& operator<<(const T& data);
     
     private:
         ///< The stream onto which all logs get written to
@@ -158,6 +165,9 @@ namespace cpplog::logger {
 
 		///< The format of the log message
         LogFormat format;
+
+        ///< Log level if used does not specify log level
+        LogLevel defaultLogLevel = log_level::defaultValue;
 
 		///< The set of messages that have been logged once
         std::unordered_set<std::string> loggedOnceMessages;

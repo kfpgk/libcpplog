@@ -34,7 +34,15 @@ int main(int argc, char* argv[]) {
     test.testLogWithLogLevelContextLogLevel();
     test.testLogWithLogLevelContextLong();
 
-	test.testStreamInsertionOperator();
+	test.testStreamString();
+    test.testStreamInt();
+    test.testStreamFloat();
+
+    test.testStreamStdEndl();
+
+    test.testStreamLogLevel();
+    test.testStreamTimeStamp();
+    test.testStreamContext();
 
     std::cout << "UT: logger::logger passed." << std::endl;
     return 0;
@@ -287,22 +295,129 @@ namespace cpplog::logger::unit_test {
         assert(std::regex_match(logStream.str(), expected));
     }
 
-    void LoggerTest::testStreamInsertionOperator() const {
+    void LoggerTest::testStreamString() const {
         std::cout << std::source_location::current().file_name()
             << "(" << std::source_location::current().line() << ")"
-            << ": Running testStreamInsertionOperator()" << std::endl;
+            << ": Running testStreamString()" << std::endl;
 
         std::stringstream logStream;
-        Logger logger(logStream, { });
+        std::string testString{ "'Test string'" };
+        Logger logger(logStream);
 
-        logger << "Test log";
+        logger << "This is some test string: "
+               << testString;
 
-        std::string expected = "Test log";
+        std::string expected = "This is some test string: 'Test string'";
 
         DEBUG("Expected: '" << expected << "'");
         DEBUG("Actual: '" << logStream.str() << "'");
 
         assert(logStream.str() == expected);
+    }
+
+    void LoggerTest::testStreamInt() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamInt()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << 53;
+
+        std::string expected = "53";
+
+        DEBUG("Expected: '" << expected << "'");
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(logStream.str() == expected);
+    }
+
+    void LoggerTest::testStreamFloat() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamFloat()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << 12.2;
+
+        std::string expected = "12.2";
+
+        DEBUG("Expected: '" << expected << "'");
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(logStream.str() == expected);
+    }
+
+    void LoggerTest::testStreamStdEndl() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamStdEndl()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << "Hello" << std::endl;
+
+        std::string expected = "Hello\n";
+
+        DEBUG("Expected: '" << expected << "'");
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(logStream.str() == expected);
+    }
+
+    void LoggerTest::testStreamLogLevel() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamLogLevel()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << LogLevel::Error;
+
+        std::regex expected(exptected_format::logLevel + exptected_format::separator);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testStreamTimeStamp() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamTimeStamp()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << LogStreamComponent::TimeStamp;
+
+        std::regex expected(exptected_format::timeStamp + exptected_format::separator);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testStreamContext() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamContext()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << LogStreamComponent::TimeStamp << std::source_location::current();
+
+        std::regex expected(exptected_format::timeStamp + exptected_format::separator);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
     }
 
 }

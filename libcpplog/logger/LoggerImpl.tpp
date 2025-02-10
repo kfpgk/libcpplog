@@ -5,10 +5,10 @@
 namespace cpplog::logger {
 
     template<typename T> 
-    Logger::Impl& operator<<(Logger::Impl& impl, const T& data) {
-        std::scoped_lock lock(impl.outMutex);
-        impl.outStream.get() << data;
-        return impl;                
+    Logger::Impl& Logger::Impl::operator<<(const T& data) {
+        std::scoped_lock lock(outMutex);
+        outStream.get() << data;
+        return *this;                
     }
    
 }

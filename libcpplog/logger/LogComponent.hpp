@@ -29,16 +29,6 @@ namespace cpplog::logger {
         TimeStamp ///< Time stamp 
     };
 
-    inline LogComponent streamComponentToLogComponent(LogStreamComponent streamComponent) {
-        switch (streamComponent) {
-        case LogStreamComponent::TimeStamp:
-            return LogComponent::TimeStamp;
-            break;
-        default:
-            return LogComponent::None;
-        }
-    }
-
 }
 
 #endif

@@ -1,5 +1,6 @@
 #include <libcpplog/logger/LoggerImpl.hpp>
 #include <libcpplog/logger/LogComponent.hpp>
+#include <libcpplog/logger/LogComponentOps.hpp>
 #include <libcpplog/logger/LogFormat.hpp>
 #include <libcpplog/logger/decorator/LogLevel.hpp>
 #include <libcpplog/logger/decorator/Message.hpp>

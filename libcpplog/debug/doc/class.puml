@@ -1,0 +1,12 @@
+@startuml debug-class-diagram
+
+title libcpplog debug class diagram
+
+class Debug {
+    - debugIndent : int
+    + DEBUG() : void
+    + DEBUG_ENTER() : void
+    + DEBUG_EXIT() : void
+}
+
+@enduml

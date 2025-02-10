@@ -1,0 +1,30 @@
+@startuml logger-class-diagram
+
+title libcpplog logger class diagram
+
+class Logger {
+    - pImpl : Logger::Impl*
+    + {static} get() : Logger&
+    + {static} get(ostream&) : Logger&
+    + {static} setOutput(ostream&) : void
+    + log(string) : void
+    + log(string, bool) : void
+    + log(string, string, int) : void
+    + logOnce(string) : void
+    + operator<< <T>(T) : Logger&
+}
+
+class "Logger::Impl" as LoggerImpl {
+    - outputStream : ostream&
+    - loggedOnceMessages : string[]
+    - buildMessageKey(string, location) : string
+    + setOutput(ostream&) : void
+    + log(string) : void
+    + log(string, bool) : void
+    + log(string, string, int) : void
+    + logOnce(string) : void
+}
+
+Logger o-- "1" LoggerImpl
+
+@enduml

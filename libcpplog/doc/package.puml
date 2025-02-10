@@ -1,0 +1,16 @@
+@startuml package-diagram
+
+title libcpplog package diagram
+
+package logger {
+    [Logger]
+    [LoggerImpl]
+}
+
+package debug {
+    [Debug]
+}
+
+logger ..> debug : <<access>>
+
+@enduml

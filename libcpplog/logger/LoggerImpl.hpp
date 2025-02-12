@@ -149,7 +149,7 @@ namespace cpplog::logger {
          *
          * Log the corresponding location
          */
-        Impl& operator<<(std::source_location location);
+        Impl& operator<<(const std::source_location& location);
 
         /**
          * @brief Insertion operator
@@ -188,7 +188,7 @@ namespace cpplog::logger {
         std::string constructLogMessage(
             LogLevel logLevel,
             const std::string_view message,
-            const std::source_location location) const;
+            const std::source_location& location) const;
 
         /**
          * @brief Constructs a log message according to a
@@ -205,7 +205,7 @@ namespace cpplog::logger {
         std::string constructLogMessage(
             LogLevel logLevel,
             const std::string_view message,
-            const std::source_location location,
+            const std::source_location& location,
             LogFormat format) const;
 
         /**

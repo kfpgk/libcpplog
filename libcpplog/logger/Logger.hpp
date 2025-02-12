@@ -1,6 +1,7 @@
 #ifndef LIBCPPLOG_LOGGER_LOGGER_HPP
 #define LIBCPPLOG_LOGGER_LOGGER_HPP
 
+#include <libcpplog/logger/LogComponent.hpp>
 #include <libcpplog/logger/LogFormat.hpp>
 #include <libcpplog/logger/LogLevel.hpp>
 

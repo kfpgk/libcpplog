@@ -92,7 +92,7 @@ namespace cpplog::logger {
         return *this;
     }
 
-    Logger::Impl& Logger::Impl::operator<<(std::source_location location) {
+    Logger::Impl& Logger::Impl::operator<<(const std::source_location& location) {
         LogFormat format{ LogComponent::Context };
         outStream.get() << constructLogMessage(defaultLogLevel, "", location, format);
         return *this;
@@ -101,7 +101,7 @@ namespace cpplog::logger {
     std::string Logger::Impl::constructLogMessage(
         LogLevel logLevel,
         const std::string_view message,
-        const std::source_location location) const {
+        const std::source_location& location) const {
 
 		return constructLogMessage(logLevel, message, location, format);
     }
@@ -109,7 +109,7 @@ namespace cpplog::logger {
     std::string Logger::Impl::constructLogMessage(
         LogLevel logLevel,
         const std::string_view message,
-        const std::source_location location,
+        const std::source_location& location,
         LogFormat format) const {
 
         std::unique_ptr<decorator::Message> msg = std::make_unique<decorator::Message>(message);

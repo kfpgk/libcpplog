@@ -34,7 +34,7 @@ namespace cpplog::logger::decorator {
         virtual std::string getString() const;
 
     private:
-		std::string content; ///< The content of the message
+        std::string content; ///< The content of the message
 
     };
 

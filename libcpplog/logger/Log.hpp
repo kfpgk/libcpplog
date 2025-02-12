@@ -2,6 +2,7 @@
 #define LIBCPPLOG_LOGGER_LOG_HPP
 
 #include <libcpplog/logger/Logger.hpp>
+#include <libcpplog/logger/LogFormat.hpp>
 #include <libcpplog/logger/LogLevel.hpp>
 
 #include <ostream>
@@ -21,6 +22,15 @@ namespace cpplog::logger {
      * 
      */
     void setOutput(std::ostream& outStream);
+
+    /**
+     * @brief Configure log format
+     *
+     * @param[in] format The format of the log message
+     * in a ordered sequence of LogComponent enums. Last
+     * component will be at the beginning of the line.
+     */
+    void setFormat(LogFormat format);
 
     /**
      * @brief Logs \p message to configured output stream.

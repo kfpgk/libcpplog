@@ -11,6 +11,10 @@ namespace cpplog::logger {
         logger.setOutput(outStream);
     }
 
+    void setFormat(LogFormat format) {
+        logger.setFormat(format);
+    }
+
     void log(
         const std::string_view message,
         const std::source_location location) {

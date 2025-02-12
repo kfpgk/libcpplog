@@ -4,9 +4,10 @@ title libcpplog debug class diagram
 
 class Debug {
     - debugIndent : int
-    + DEBUG() : void
+    + DEBUG(string) : void
     + DEBUG_ENTER() : void
     + DEBUG_EXIT() : void
+    + DEBUG_EXIT_WITH_MSG(string) : void
 }
 
 @enduml

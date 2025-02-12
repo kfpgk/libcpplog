@@ -2,29 +2,108 @@
 
 title libcpplog logger class diagram
 
+enum LogLevel {
+    Info
+    Warning
+    Error
+}
+hide LogLevel methods
+
+enum LogComponent {
+    None
+    ..
+    LogLevel
+    Context
+    ContextLong
+    TimeStamp
+}
+
+enum LogStreamComponent {
+    TimeStamp
+}
+hide LogStreamComponent methods
+
+class "LogComponent[ ]" as LogComponentArray 
+hide LogComponentArray members
+
 class Logger {
-    - pImpl : Logger::Impl*
-    + {static} get() : Logger&
-    + {static} get(ostream&) : Logger&
-    + {static} setOutput(ostream&) : void
+    == public ==
+    + Logger(ostream&, LogFormat)
+    ..
+    + setOutput(ostream&) : void
+    + setFormat(LogFormat) : void
+    ..
     + log(string) : void
-    + log(string, bool) : void
-    + log(string, string, int) : void
+    + log(LogLevel, string) : void
     + logOnce(string) : void
-    + operator<< <T>(T) : Logger&
+    + logOnce(LogLevel, string) : void
+    ..
+    + operator<<(string) : Logger&
+    + operator<<(float) : Logger&
+    + operator<<(enum LogLevel) : Logger&
+    + operator<<(enum LogStreamComponent) : Logger&
+    + operator<<(source_location) : Logger&
+    == private ==
+    - pImpl : Logger::Impl*
+}
+
+class "<<globals>>" as globals << (G,#FF77FF) >> {
+    logger : Logger
+    ..
+    setOutput(ostream&) : void
+    setFormat(LogFormat) : void
+    ..
+    log(string) : void
+    log(LogLevel, string) : void
+    logOnce(string) : void
+    logOnce(LogLevel, string) : void
 }
 
 class "Logger::Impl" as LoggerImpl {
-    - outputStream : ostream&
-    - loggedOnceMessages : string[]
-    - buildMessageKey(string, location) : string
+    == public ==
+    + Logger(ostream&, LogFormat)
+    ..
     + setOutput(ostream&) : void
+    + setFormat(LogFormat) : void
+    ..
     + log(string) : void
-    + log(string, bool) : void
-    + log(string, string, int) : void
+    + log(LogLevel, string) : void
     + logOnce(string) : void
+    + logOnce(LogLevel, string) : void
+    ..
+    + operator<< <T>(T) : Logger&
+    + operator<<(enum LogLevel) : Logger&
+    + operator<<(enum LogStreamComponent) : Logger&
+    + operator<<(source_location) : Logger&
+    == private ==
+    - outputStream : ostream&
+    - outMutex : mutex
+    - loggedOnceMessages : string[ ]
+    - mutexForLoggedMsg : mutex
+    - format : LogFormat
+    --
+    - buildMessageKey(string, location) : string
+    - constructLogMessage(LogLevel, string, LogFormat, source_location) : string
 }
 
-Logger o-- "1" LoggerImpl
+Logger "1" o-- "1" LoggerImpl
+
+LogLevel - Logger
+LogComponent - Logger
+LogStreamComponent - Logger
+
+LogLevel - LoggerImpl
+LogComponent - LoggerImpl
+LogStreamComponent - LoggerImpl
+
+LogLevel -left- globals
+LogComponent -left- globals
+LogStreamComponent -left- globals
+
+Logger <- LogComponentArray : <<import>>\nLogFormat
+LoggerImpl <- LogComponentArray : <<import>>\nLogFormat
+globals <- LogComponentArray : <<import>>\nLogFormat
+
+globals -> Logger
 
 @enduml

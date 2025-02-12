@@ -2,9 +2,28 @@
 
 title libcpplog package diagram
 
+package "Public Interface" as API
+
 package logger {
     [Logger]
-    [LoggerImpl]
+    [Log]
+    [LogLevel]
+    [LogFormat]
+    [LogComponent]
+    [LogStreamComponent]
+
+    package decorator {
+        [Decorator]
+        [Message]
+        [LogLevel]
+        [TimeStamp]
+
+        package context {
+            [Context]
+            [Long]
+            [Short]
+        }
+    }
 }
 
 package debug {
@@ -12,5 +31,15 @@ package debug {
 }
 
 logger ..> debug : <<access>>
+
+[Logger] ..> decorator : <<access>>
+
+API ..> Logger : <<import>>
+API ..> Log : <<import>>
+API ..> LogLevel : <<import>>
+API ..> LogFormat : <<import>>
+API ..> LogComponent : <<import>>
+API ..> LogStreamComponent : <<import>>
+API ..> Debug : <<import>>
 
 @enduml

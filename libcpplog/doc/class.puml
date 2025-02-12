@@ -1,0 +1,64 @@
+@startuml class-diagram
+
+title libcpplog class interface diagram
+
+package public {
+
+    enum LogLevel {
+        Info
+        Warning
+        Error
+    }
+    hide LogLevel methods
+
+    enum LogComponent {
+        None
+        ..
+        LogLevel
+        Context
+        ContextLong
+        TimeStamp
+    }
+
+    enum LogStreamComponent {
+        TimeStamp
+    }
+    hide LogStreamComponent methods
+
+    class LogFormat << (D,#0077AA) >> {
+        LogComponent[ ]
+    }
+    hide LogFormat methods
+
+    class Logger {
+        + Logger(ostream&, LogFormat)
+        ..
+        + setOutput(ostream&) : void
+        + setFormat(LogFormat) : void
+        ..
+        + log(string) : void
+        + log(LogLevel, string) : void
+        + logOnce(string) : void
+        + logOnce(LogLevel, string) : void
+        ..
+        + operator<<(string) : Logger&
+        + operator<<(float) : Logger&
+        + operator<<(enum LogLevel) : Logger&
+        + operator<<(enum LogStreamComponent) : Logger&
+        + operator<<(source_location) : Logger&
+    }
+
+    class "<<globals>>" as globals << (G,#FF77FF) >> {
+        logger : Logger
+        ..
+        setOutput(ostream&) : void
+        setFormat(LogFormat) : void
+        ..
+        log(string) : void
+        log(LogLevel, string) : void
+        logOnce(string) : void
+        logOnce(LogLevel, string) : void
+    }
+}
+
+@enduml

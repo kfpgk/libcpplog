@@ -1,0 +1,58 @@
+@startuml logger-decorator-class-diagram
+
+title libcpplog logger::decorator class diagram
+
+class Message {
+    == public ==
+    + Message(string)
+    ..
+    + getString() : string
+    == private ==
+    - content : string
+}
+
+class Decorator {
+    == public ==
+    + Decorator(Message*, string)
+    ..
+    + getString() : string
+    + {static} setSeparator(string) : void
+    + {static} getSeparator() : string
+    == protected ==
+    # message : Message*
+    == private ==
+    - separator : string
+}
+
+class LogLevel {
+    == public ==
+    + LogLevel(Message*, enum LogLevel)
+    ..
+    + getString() : string
+    == private ==
+    - logLevel : enum LogLevel
+    - buildString() : string
+}
+
+class TimeStamp {
+    == public ==
+    + TimeStamp(Message*, string)
+    ..
+    + getString() : string
+    == private ==
+    - buildString() : string
+}
+
+package context {
+    class Context {
+        + getString() : string
+    }
+}
+
+Message <|-- Decorator
+Message "1" --o "1" Decorator
+Decorator <|-- LogLevel
+Decorator <|-- TimeStamp
+Decorator <|-- Context
+
+@enduml

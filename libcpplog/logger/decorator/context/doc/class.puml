@@ -1,0 +1,34 @@
+@startuml logger-decorator-context-class-diagram
+
+title libcpplog logger::decorator::context class diagram
+
+class Context {
+    == public ==
+    + Context(Message*)
+    ..
+    + getString() : string
+    == protected ==
+    # source_location : string
+    == private ==
+    - {abstract} getFunctionName() : string
+    - buildString() : string
+}
+
+class Long {
+    == public ==
+    + Long(Message*)
+    == private ==
+    - getFunctionName() : string
+}
+
+class Short {
+    == public ==
+    + Short(Message*)
+    == private ==
+    - getFunctionName() : string
+}
+
+Context <|-- Long
+Context <|-- Short
+
+@enduml

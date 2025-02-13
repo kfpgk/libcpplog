@@ -7,8 +7,9 @@
 
 namespace cpplog::logger::decorator::context {
 
-    Long::Long(std::unique_ptr<Message> message, const std::source_location location) :
-        Context{ std::move(message), location } {
+    Long::Long(
+        std::unique_ptr<Message> message, const std::source_location location) noexcept :
+            Context{ std::move(message), location } {
 
     }
 

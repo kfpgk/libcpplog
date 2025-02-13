@@ -9,9 +9,10 @@
 
 namespace cpplog::logger::decorator::context {
 
-    Context::Context(std::unique_ptr<Message> message, const std::source_location location) :
-        Decorator{ std::move(message) },
-        location{ location } {
+    Context::Context(
+        std::unique_ptr<Message> message, const std::source_location location) noexcept :
+            Decorator{ std::move(message) },
+            location{ location } {
 
     }
 

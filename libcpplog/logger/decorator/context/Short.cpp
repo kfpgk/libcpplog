@@ -12,8 +12,9 @@
 
 namespace cpplog::logger::decorator::context {
 
-    Short::Short(std::unique_ptr<Message> message, const std::source_location location) :
-        Context{ std::move(message), location } {
+    Short::Short(
+        std::unique_ptr<Message> message, const std::source_location location) noexcept  :
+            Context{ std::move(message), location } {
 
     }
 

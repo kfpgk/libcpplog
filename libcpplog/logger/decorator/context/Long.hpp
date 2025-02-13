@@ -26,8 +26,8 @@ namespace cpplog::logger::decorator::context {
 		 * @param[in] message The message to be decorated
 		 * @param[in] location The location of the message
 		 */
-        explicit Long(std::unique_ptr<Message> message,
-            const std::source_location location);
+        Long(std::unique_ptr<Message> message,
+            const std::source_location location) noexcept;
 
     private:
 		/**

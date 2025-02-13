@@ -9,18 +9,18 @@
 
 namespace cpplog::logger {
 
-    Logger::Logger(std::ostream& outStream, LogFormat format) :
+    Logger::Logger(std::ostream& outStream, LogFormat format) noexcept :
         pImpl{ std::make_unique<Logger::Impl>(outStream, format) } {
 
     }
 
     Logger::~Logger() = default;
 
-    void Logger::setOutput(std::ostream& outStream) {
+    void Logger::setOutput(std::ostream& outStream) noexcept {
         pImpl->setOutput(outStream);
     }
 
-    void Logger::setFormat(LogFormat format) {
+    void Logger::setFormat(LogFormat format) noexcept {
         pImpl->setFormat(format);
     }
 

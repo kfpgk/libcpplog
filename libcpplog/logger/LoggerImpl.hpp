@@ -32,7 +32,7 @@ namespace cpplog::logger {
 		 * subsequent logs get written to.
 		 * @param[in] format The format of the log message
 		 */
-        Impl(std::ostream& outStream, LogFormat);
+        Impl(std::ostream& outStream, LogFormat) noexcept;
 
         /**
 		 * @brief Deleted copy constructor
@@ -55,14 +55,14 @@ namespace cpplog::logger {
          * @param[in] outStream The stream onto which all
          * subsequent logs get written to.
          */
-        void setOutput(std::ostream& outStream);
+        void setOutput(std::ostream& outStream) noexcept;
 
 		/**
 		 * @brief Set the format of the log message
 		 *
 		 * @param[in] format The format of the log message
 		 */
-        void setFormat(LogFormat format);
+        void setFormat(LogFormat format) noexcept;
 
 		/**
          * @brief Logs \p message to configured output stream

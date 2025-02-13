@@ -20,17 +20,17 @@
 
 namespace cpplog::logger {
 
-    Logger::Impl::Impl(std::ostream& outStream, LogFormat format) :
+    Logger::Impl::Impl(std::ostream& outStream, LogFormat format) noexcept :
         outStream{ outStream },
         format{ format } {
 
     }
 
-    void Logger::Impl::setOutput(std::ostream& outStream) {
+    void Logger::Impl::setOutput(std::ostream& outStream) noexcept {
         this->outStream = outStream;
     }
 
-    void Logger::Impl::setFormat(LogFormat format) {
+    void Logger::Impl::setFormat(LogFormat format) noexcept {
         this->format = format;
     }
 

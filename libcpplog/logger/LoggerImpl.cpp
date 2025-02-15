@@ -118,24 +118,20 @@ namespace cpplog::logger {
             std::unique_ptr<decorator::Message> tmpMsg;
             switch (component) {
             case LogComponent::Context:
-                DEBUG("Decorate with context");
                 tmpMsg = std::make_unique<decorator::context::Short>(
                     std::move(msg), location);
                 msg = std::move(tmpMsg);
                 break;
             case LogComponent::ContextLong:
-                DEBUG("Decorate with long context");
                 tmpMsg = std::make_unique<decorator::context::Long>(
                     std::move(msg), location);
                 msg = std::move(tmpMsg);
                 break;
             case LogComponent::LogLevel:
-                DEBUG("Decorate with log level");
                 tmpMsg = std::make_unique<decorator::LogLevel>(std::move(msg), logLevel);
                 msg = std::move(tmpMsg);
                 break;
             case LogComponent::TimeStamp:
-                DEBUG("Decorate with time stamp");
                 tmpMsg = std::make_unique<decorator::TimeStamp>(std::move(msg));
                 msg = std::move(tmpMsg);
                 break;

@@ -132,7 +132,7 @@ cmake --build . --config Release
 Installation may require admin privileges depending on install location. If so use a <em>administrator</em> `powershell` or `cmd` for the install command.
 
 ```powershell
-cmake -P .\cmake_install.cmake
+cmake --build . --target install --config Release
 ```
 
 <a id="windows-static-debug-install"></a>
@@ -150,7 +150,7 @@ cmake --build . --config Debug
 Installation may require admin privileges depending on install location. If so use a <em>administrator</em> `powershell` or `cmd` for the install command.
 
 ```powershell
-cmake -P .\cmake_install.cmake
+cmake --build . --target install --config Debug
 ```
 
 <a id="directory-structure"></a>

@@ -24,7 +24,8 @@ Debug output that results in no runtime overhead for release builds.
 void MyClass::method() {
     DEBUG_ENTER();
 
-    DEBUG();
+    int x = 5;
+    DEBUG("x is " << 5);
 
     DEBUG_EXIT();
 }
@@ -33,27 +34,24 @@ void MyClass::method() {
 Logging including context via `log()` calls or stream operator `<<`. Logging comes with runtime performance costs.
 
 ```cpp
-#include <libcpplog/logger/Logger.hpp>
+#include <libcpplog/logger/Log.hpp>
 
 void MyClass::method() {
     using namespace cpplog::logger;
 
     // Simple log.
-    Logger::get().log("Test passed.");
+    log("Test passed.");
 
     // Including context (file, function, line).
-    Logger::get().log("Test passed.", true);
-
-    // C style context.
-    Logger::get().log("Test passed.", __FILE__, __LINE__);
+    log("Test passed.");
 
     // Log message only once.
     for (int i = 0; i < 10; i++) {
-        Logger::get().logOnce("Only first iteration.", true);
+        logOnce("Only first iteration.");
     }
 
     // Stream operator.
-    Logger::get() << "Test passed." << std::endl;
+    logger << "Test passed." << std::endl;
 }
 ```
 
@@ -68,21 +66,9 @@ void MyClass::method() {
 Build the library:
 ```shell
 cd libcpplog
-mkdir build
-cd build
-cmake ..
-cmake --build .
-```
-
-## Examples
-
-Set the `BUILD_EXAMPLES` option to build example applications.
-
-```shell
-cd libcpplog
-mkdir build
-cd build
-cmake -DBUILD_EXAMPLES=ON ..
+mkdir -p build/release
+cd build/release
+cmake ../..
 cmake --build .
 ```
 
@@ -92,9 +78,9 @@ Set the `BUILD_UNIT_TESTS` option to build unit tests.
 
 ```shell
 cd libcpplog
-mkdir build
-cd build
-cmake -DBUILD_UNIT_TESTS=ON ..
+mkdir -p build/release
+cd build/release
+cmake -DBUILD_UNIT_TESTS=ON ../..
 cmake --build .
 ```
 
@@ -111,10 +97,60 @@ Use the `CMAKE_BUILD_TYPE` option to enable debug build.
 
 ```shell
 cd libcpplog
-mkdir -p build
-cd build
-cmake -DCMAKE_BUILD_TYPE=DEBUG ..
+mkdir -p build/debug
+cd build/debug
+cmake -DCMAKE_BUILD_TYPE=DEBUG ../..
 cmake --build .
+```
+
+# Installation
+
+Building a static library is the default.
+For building shared libraries use the <em>cmake</em> option `BUILD_SHARED_LIBS`. Examples see below.
+
+## Windows
+
+<b>MSVC</b> requires dependencies to be the same type of build as the actual target executable. 
+This is why it makes sense to provide both a release build as well as a debug build library.
+We achieve this by adding a `d` postfix to the library name (`libcpplogd.lib`), when performing a debug build.
+This way we can install both versions of the library next to each other. The recommendation is to <b>install both</b>
+[release](#windows-static-release-install) and [debug](#windows-static-debug-install) versions, so the client 
+can link to whichever build it needs.
+
+<a id="windows-static-release-install"></a>
+### Static release version
+Install instructions for the static release version using `powershell`.
+Use `-DCMAKE_INSTALL_PREFIX` only if you do not want to install to the default location.
+
+```powershell
+Set-Location -path libcpplog
+New-Item -name build\release -ItemType Directory -Force
+Set-Location build\release
+cmake ..\.. -DCMAKE_INSTALL_PREFIX=<absolute-path-to-installation-dir>
+cmake --build . --config Release
+```
+Installation may require admin privileges depending on install location. If so use a <em>administrator</em> `powershell` or `cmd` for the install command.
+
+```powershell
+cmake -P .\cmake_install.cmake
+```
+
+<a id="windows-static-debug-install"></a>
+### Static debug version
+Install instructions for the static debug version using `powershell`.
+Use `-DCMAKE_INSTALL_PREFIX` only if you do not want to install to the default location.
+
+```powershell
+Set-Location -path libcpplog
+New-Item -name build\debug -ItemType Directory -Force
+Set-Location build\debug
+cmake ..\.. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=<absolute-path-to-installation-dir>
+cmake --build . --config Debug
+```
+Installation may require admin privileges depending on install location. If so use a <em>administrator</em> `powershell` or `cmd` for the install command.
+
+```powershell
+cmake -P .\cmake_install.cmake
 ```
 
 <a id="directory-structure"></a>

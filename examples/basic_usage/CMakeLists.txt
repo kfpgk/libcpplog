@@ -1,7 +1,6 @@
-add_executable(file_logger
+add_executable(basic_usage
     main.cpp
 )
-
 
 find_package(LIBCPPLOG
     NAMES
@@ -19,12 +18,12 @@ find_library(LIBCPPLOG
         "${LIBCPPLOG_LIBRARY_DIR}"
 )
 
-target_link_libraries(file_logger
+target_link_libraries(basic_usage
     PRIVATE
         ${LIBCPPLOG}
 )
 
-target_include_directories(file_logger
+target_include_directories(basic_usage
     PRIVATE
         "${LIBCPPLOG_INCLUDE_DIRS}"
 )

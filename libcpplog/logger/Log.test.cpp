@@ -5,7 +5,6 @@
 #include <cassert>
 #include <cstddef>
 #include <iostream>
-#include <regex>
 #include <source_location>
 #include <sstream>
 #include <string>

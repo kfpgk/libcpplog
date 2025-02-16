@@ -12,4 +12,4 @@ if(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
     add_compile_definitions(DEBUG_BUILD=1)
 endif()
 
-add_subdirectory(file_logger)
+add_subdirectory(basic_usage)

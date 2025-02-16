@@ -2,6 +2,7 @@ target_sources(libcpplog
     PRIVATE
         Log.cpp
         LogComponentOps.cpp
+        LogFormat.cpp
         Logger.cpp
         LoggerImpl.cpp
 )
@@ -26,6 +27,23 @@ if(BUILD_UNIT_TESTS)
     add_test(
         NAME "UT logger::Log"
         COMMAND Log_test
+    )
+
+    add_executable(LogFormat_test
+        LogFormat.test.cpp
+    )
+    target_include_directories(LogFormat_test 
+        PRIVATE
+            ${CMAKE_SOURCE_DIR}
+            ${CMAKE_BINARY_DIR}
+    )
+    target_link_libraries(LogFormat_test
+        PRIVATE
+            libcpplog
+    )
+    add_test(
+        NAME "UT logger::LogFormat"
+        COMMAND LogFormat_test
     )
 
     add_executable(Logger_test

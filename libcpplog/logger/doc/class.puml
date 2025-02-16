@@ -23,8 +23,18 @@ enum LogStreamComponent {
 }
 hide LogStreamComponent methods
 
-class "LogComponent[ ]" as LogComponentArray 
-hide LogComponentArray members
+class LogFormat {
+    == public ==
+    + LogFormat(LogComponent...)
+    + LogFormat(LogComponent[ ])
+    ..
+    + begin() : LogComponent*
+    + end() : LogComponent*
+    ..
+    + {static} defaultValue() : LogFormat
+    == private ==
+    components : LogComponent[ ]
+}
 
 class Logger {
     == public ==
@@ -100,9 +110,9 @@ LogLevel -left- globals
 LogComponent -left- globals
 LogStreamComponent -left- globals
 
-Logger <- LogComponentArray : <<import>>\nLogFormat
-LoggerImpl <- LogComponentArray : <<import>>\nLogFormat
-globals <- LogComponentArray : <<import>>\nLogFormat
+Logger - LogFormat
+LoggerImpl - LogFormat 
+globals - LogFormat
 
 globals -> Logger
 

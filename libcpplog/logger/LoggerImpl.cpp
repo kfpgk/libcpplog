@@ -30,7 +30,7 @@ namespace cpplog::logger {
         this->outStream = outStream;
     }
 
-    void Logger::Impl::setFormat(LogFormat format) noexcept {
+    void Logger::Impl::setFormat(const LogFormat& format) noexcept {
         this->format = format;
     }
 

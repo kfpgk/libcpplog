@@ -11,7 +11,7 @@ namespace cpplog::logger {
         logger.setOutput(outStream);
     }
 
-    void setFormat(LogFormat format) {
+    void setFormat(const LogFormat& format) {
         logger.setFormat(format);
     }
 

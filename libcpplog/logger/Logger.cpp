@@ -20,7 +20,7 @@ namespace cpplog::logger {
         pImpl->setOutput(outStream);
     }
 
-    void Logger::setFormat(LogFormat format) noexcept {
+    void Logger::setFormat(const LogFormat& format) noexcept {
         pImpl->setFormat(format);
     }
 

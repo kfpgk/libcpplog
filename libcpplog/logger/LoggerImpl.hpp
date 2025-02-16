@@ -62,7 +62,7 @@ namespace cpplog::logger {
 		 *
 		 * @param[in] format The format of the log message
 		 */
-        void setFormat(LogFormat format) noexcept;
+        void setFormat(const LogFormat& format) noexcept;
 
 		/**
          * @brief Logs \p message to configured output stream

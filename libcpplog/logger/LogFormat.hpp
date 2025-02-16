@@ -8,31 +8,55 @@
 namespace cpplog::logger {
 
     /**
-     * @brief Log format
+     * @brief Log format definition class
      *
-     * Type to define what components
-     * shall be part of the log message.
-     * It is a vector of LogComponent enums.
-     * First element will occur on the left.
+     * Class to define what components shall be part of the
+     * log message. It is constructed from a vector of 
+     * LogComponent enums. The first element will occur on the 
+     * left.
      */
-    using LogFormat = std::vector<LogComponent>;
+    class LogFormat {
 
-    namespace log_format {
+    public:
+        /**
+         * @brief Constructor
+         * 
+         * @param[in] components The components to be logged in the 
+         * corresponding order.
+         */
+        LogFormat(std::convertible_to<LogComponent> auto ... components) noexcept;
 
         /**
-		 * @brief Reasonable default value for log format
-         *
-         * Default value for log format, including log level
-         * time stamp, and context information.
+         * @brief Constructor
+         * 
+         * @param[in] components A vector of components to be logged in the 
+         * corresponding order.
          */
-        const LogFormat defaultValue{
-            LogComponent::LogLevel,
-            LogComponent::TimeStamp,
-            LogComponent::Context
-        };
+        LogFormat(const std::vector<LogComponent>& components) noexcept;
 
-    }
+        /**
+         * @brief Returns iterator to the beginning of the components vector
+         */
+        std::vector<LogComponent>::iterator begin() noexcept;
+
+        /**
+         * @brief Returns iterator to the end of the components vector
+         */
+        std::vector<LogComponent>::iterator end() noexcept;
+
+        /**
+         * @brief Returns a reasonable default value for log format
+         */
+        static LogFormat defaultValue() noexcept;
+
+    private:
+        ///< data container to hold the log components. Order is important.
+        std::vector<LogComponent> components; 
+
+    };
 
 }
+
+#include <libcpplog/logger/LogFormat.tpp>
 
 #endif

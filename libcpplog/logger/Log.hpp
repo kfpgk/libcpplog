@@ -30,7 +30,7 @@ namespace cpplog::logger {
      * in a ordered sequence of LogComponent enums. Last
      * component will be at the beginning of the line.
      */
-    void setFormat(LogFormat format);
+    void setFormat(const LogFormat& format);
 
     /**
      * @brief Logs \p message to configured output stream.

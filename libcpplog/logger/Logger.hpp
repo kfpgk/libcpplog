@@ -35,7 +35,11 @@ namespace cpplog::logger {
          */
         Logger(
             std::ostream& outStream = std::cout,
-            LogFormat format = log_format::defaultValue) noexcept;
+            LogFormat format = LogFormat::defaultValue()) noexcept;
+
+        /**
+		 * @brief Destructor
+         */        
         ~Logger();
 
         /**
@@ -63,7 +67,7 @@ namespace cpplog::logger {
          * in a ordered sequence of LogComponent enums. Last
          * component will be at the beginning of the line.
          */
-        void setFormat(LogFormat format) noexcept;
+        void setFormat(const LogFormat& format) noexcept;
 
         /**
          * @brief Logs \p message to configured output stream

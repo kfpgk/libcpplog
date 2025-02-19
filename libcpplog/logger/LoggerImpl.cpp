@@ -1,6 +1,5 @@
 #include <libcpplog/logger/LoggerImpl.hpp>
 #include <libcpplog/logger/LogComponent.hpp>
-#include <libcpplog/logger/LogComponentOps.hpp>
 #include <libcpplog/logger/LogFormat.hpp>
 #include <libcpplog/logger/decorator/LogLevel.hpp>
 #include <libcpplog/logger/decorator/Message.hpp>
@@ -78,6 +77,11 @@ namespace cpplog::logger {
         return *this;
     }
 
+    Logger::Impl& Logger::Impl::operator<<(const LogStream& stream) {
+        outStream.get() << constructLogMessage(stream.getLogLevel(), "", stream.getLocation(), format);
+        return *this;
+    }
+
     Logger::Impl& Logger::Impl::operator<<(LogLevel level) {
 		LogFormat format{ LogComponent::LogLevel };
         std::scoped_lock lock(outMutex);
@@ -86,9 +90,11 @@ namespace cpplog::logger {
 		return *this;
 	}
 
-    Logger::Impl& Logger::Impl::operator<<(LogStreamComponent component) {
-		LogFormat format{ streamComponentToLogComponent(component) };
-        outStream.get() << constructLogMessage(defaultLogLevel, "", std::source_location::current(), format);
+    Logger::Impl& Logger::Impl::operator<<(const LogStream::TimeStamp& timeStamp) {
+        LogFormat format{ LogComponent::TimeStamp };
+        // source_location and log level do not matter here, as they are not used with this format.
+        outStream.get() << 
+            constructLogMessage(defaultLogLevel, "", std::source_location::current(), format);
         return *this;
     }
 

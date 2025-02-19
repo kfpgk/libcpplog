@@ -11,9 +11,7 @@ namespace cpplog::logger {
      * @brief Log format definition class
      *
      * Class to define what components shall be part of the
-     * log message. It is constructed from a vector of 
-     * LogComponent enums. The first element will occur on the 
-     * left.
+     * log message. 
      */
     class LogFormat {
 
@@ -22,7 +20,7 @@ namespace cpplog::logger {
          * @brief Constructor
          * 
          * @param[in] components The components to be logged in the 
-         * corresponding order.
+         * corresponding order. First argument logged on the left.
          */
         LogFormat(std::convertible_to<LogComponent> auto ... components) noexcept;
 
@@ -30,7 +28,7 @@ namespace cpplog::logger {
          * @brief Constructor
          * 
          * @param[in] components A vector of components to be logged in the 
-         * corresponding order.
+         * corresponding order. First element of the vector logged on the left.
          */
         LogFormat(const std::vector<LogComponent>& components) noexcept;
 

@@ -1,10 +1,10 @@
 target_sources(libcpplog
     PRIVATE
         Log.cpp
-        LogComponentOps.cpp
         LogFormat.cpp
         Logger.cpp
         LoggerImpl.cpp
+        LogStream.cpp
 )
 
 add_subdirectory(decorator)

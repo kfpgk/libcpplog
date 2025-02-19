@@ -1,5 +1,6 @@
 #include <libcpplog/logger/Logger.test.hpp>
 #include <libcpplog/logger/Logger.hpp>
+#include <libcpplog/logger/LogStream.hpp>
 #include <libcpplog/logger/decorator/context/Context.test.hpp>
 #include <libcpplog/logger/decorator/Decorator.test.hpp>
 #include <libcpplog/logger/decorator/LogLevel.test.hpp>
@@ -395,7 +396,7 @@ namespace cpplog::logger::unit_test {
         std::stringstream logStream;
         Logger logger(logStream);
 
-        logger << LogStreamComponent::TimeStamp;
+        logger << LogStream::timeStamp();
 
         std::regex expected(exptected_format::timeStamp + exptected_format::separator);
 
@@ -432,13 +433,36 @@ namespace cpplog::logger::unit_test {
         Logger logger(logStream);
 
         logger << LogLevel::Error 
-               << LogStreamComponent::TimeStamp 
-               << std::source_location::current()
+               << LogStream::timeStamp()
+               << LogStream::context()
                << "Rich error log message";
 
         std::regex expected(
             exptected_format::logLevel + exptected_format::separator +
             exptected_format::timeStamp + exptected_format::separator + 
+            "Logger\\.test\\.cpp:testStreamLogLevelTimeStampContext" +
+            exptected_format::lineNo + exptected_format::separator +
+            "Rich error log message");
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testStreamLogStream() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamLogStream()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << LogStream(LogLevel::Error)
+               << "Rich error log message";
+
+        std::regex expected(
+            exptected_format::logLevel + exptected_format::separator +
+            exptected_format::timeStamp + exptected_format::separator +
             "Logger\\.test\\.cpp:testStreamLogLevelTimeStampContext" +
             exptected_format::lineNo + exptected_format::separator +
             "Rich error log message");

@@ -5,6 +5,7 @@
 #include <libcpplog/logger/LogComponent.hpp>
 #include <libcpplog/logger/LogFormat.hpp>
 #include <libcpplog/logger/LogLevel.hpp>
+#include <libcpplog/logger/LogStream.hpp>
 
 #include <functional>
 #include <mutex>
@@ -131,6 +132,13 @@ namespace cpplog::logger {
         Impl& operator<<(decltype(std::endl<char, std::char_traits<char>>) endl);
 
         /**
+         * @brief Insertion operator overload for `LogStream`
+         *
+         * Log the corresponding stream format
+         */
+        Impl& operator<<(const LogStream& stream);
+
+        /**
          * @brief Insertion operator overload for `LogLevel`
          *
          * Log the corresponding log level
@@ -138,11 +146,11 @@ namespace cpplog::logger {
         Impl& operator<<(LogLevel level);
 
         /**
-         * @brief Insertion operator overload for `LogStreamComponent`
+         * @brief Insertion operator overload for `LogStream::TimeStamp`
          *
-         * Log the corresponding component
+         * Log the current time stamp
          */
-        Impl& operator<<(LogStreamComponent component);
+        Impl& operator<<(const LogStream::TimeStamp& timeStamp);
 
         /**
          * @brief Insertion operator overload for `source_location`

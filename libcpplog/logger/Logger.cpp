@@ -69,13 +69,18 @@ namespace cpplog::logger {
         return *this;
     }
 
+    Logger& Logger::operator<<(const LogStream& stream) {
+        *pImpl << stream;
+        return *this;
+    }
+
     Logger& Logger::operator<<(LogLevel level) {
         *pImpl << level;
         return *this;
     }
 
-    Logger& Logger::operator<<(LogStreamComponent component) {
-        *pImpl << component;
+    Logger& Logger::operator<<(const LogStream::TimeStamp& timeStamp) {
+        *pImpl << timeStamp;
         return *this;
     }
 

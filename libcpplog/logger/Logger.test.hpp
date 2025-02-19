@@ -144,6 +144,12 @@ namespace cpplog::logger::unit_test {
          */
         void testStreamLogLevelTimeStampContext() const;
 
+        /**
+         * @brief Test logging of a rich log message via
+         * stream insertion operator and LogStream object
+         */
+        void testStreamLogStream() const;
+
     };
 
 }

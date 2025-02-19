@@ -25,6 +25,7 @@ install(FILES logger/Logger.hpp DESTINATION ${PUBLIC_INCLUDE_PREFIX}/logger)
 install(FILES logger/LogComponent.hpp DESTINATION ${PUBLIC_INCLUDE_PREFIX}/logger)
 install(FILES logger/LogFormat.hpp DESTINATION ${PUBLIC_INCLUDE_PREFIX}/logger)
 install(FILES logger/LogLevel.hpp DESTINATION ${PUBLIC_INCLUDE_PREFIX}/logger)
+install(FILES logger/LogStream.hpp DESTINATION ${PUBLIC_INCLUDE_PREFIX}/logger)
 install(FILES config/cpplogConfig.cmake DESTINATION .)
 
 target_include_directories(libcpplog

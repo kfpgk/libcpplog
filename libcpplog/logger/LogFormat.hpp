@@ -22,7 +22,8 @@ namespace cpplog::logger {
          * @param[in] components The components to be logged in the 
          * corresponding order. First argument logged on the left.
          */
-        LogFormat(std::convertible_to<LogComponent> auto ... components) noexcept;
+        LogFormat(std::convertible_to<LogComponent> auto ... components) noexcept :
+            components{ components... } { }
 
         /**
          * @brief Constructor
@@ -54,7 +55,5 @@ namespace cpplog::logger {
     };
 
 }
-
-#include <libcpplog/logger/LogFormat.tpp>
 
 #endif

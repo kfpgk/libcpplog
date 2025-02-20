@@ -1,11 +1,8 @@
 #include <libcpplog/debug/Debug.hpp>
 #include <libcpplog/logger/Log.hpp>
-#include <libcpplog/logger/LogComponent.hpp>
-#include <libcpplog/logger/LogFormat.hpp>
-#include <libcpplog/logger/Logger.hpp>
-#include <libcpplog/logger/LogStream.hpp>
 
 #include <sstream>
+#include <string>
 #include <vector>
 
 using namespace cpplog::logger;
@@ -83,6 +80,11 @@ void useLogger() {
 
     // Log only context and message via stream insertion operator.
     logger << LogStream::context() << "This is a streamed warning including context " << std::endl;
+
+    // Log message only once.
+    for (int i = 0; i < 10; i++) {
+        logOnce("Only first iteration.");
+    }
 
     // Log to string stream instead.
     std::stringstream ss;

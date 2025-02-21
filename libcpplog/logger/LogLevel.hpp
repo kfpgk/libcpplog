@@ -7,13 +7,14 @@ namespace cpplog::logger {
      * @brief Log level type
      * 
      * credits: Marius Bancila
-     * 
      */
     enum class LogLevel : char
     {
+        Error = 'E',
         Info = 'I',
-        Warning = 'W',
-        Error = 'E'
+        Result = 'R',
+        Warning = 'W'
+        
     };
 
     namespace log_level {

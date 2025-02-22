@@ -16,6 +16,7 @@
 #include <source_location>
 #include <string>
 #include <string_view>
+#include <syncstream>
 
 namespace cpplog::logger {
 
@@ -45,8 +46,8 @@ namespace cpplog::logger {
         const std::string_view message,
         const std::source_location location) const {
 
-        std::scoped_lock lock(outMutex);
-        outStream.get() << constructLogMessage(logLevel, message, location) << std::endl;
+        std::osyncstream(outStream.get()) << constructLogMessage(logLevel, message, location) 
+                                          << std::endl;
     }
 
     void Logger::Impl::logOnce(
@@ -71,36 +72,39 @@ namespace cpplog::logger {
         }
     }
 
-    Logger::Impl& Logger::Impl::operator<<(decltype(std::endl<char, std::char_traits<char>>) endl) {
-        std::scoped_lock lock(outMutex);
-        outStream.get() << std::endl;
+    Logger::Impl& Logger::Impl::operator<<(
+        decltype(std::endl<char, std::char_traits<char>>) endl) {
+
+        std::osyncstream(outStream.get()) << std::endl;
         return *this;
     }
 
     Logger::Impl& Logger::Impl::operator<<(const LogStream& stream) {
-        outStream.get() << constructLogMessage(stream.getLogLevel(), "", stream.getLocation(), format);
+        std::osyncstream(outStream.get()) <<
+            constructLogMessage(stream.getLogLevel(), "", stream.getLocation(), format);
         return *this;
     }
 
     Logger::Impl& Logger::Impl::operator<<(LogLevel level) {
 		LogFormat format{ LogComponent::LogLevel };
-        std::scoped_lock lock(outMutex);
 		// source_location does not matter here, as it is not used with this format.
-        outStream.get() << constructLogMessage(level, "", std::source_location::current(), format);
+        std::osyncstream(outStream.get()) <<
+            constructLogMessage(level, "", std::source_location::current(), format);
 		return *this;
 	}
 
     Logger::Impl& Logger::Impl::operator<<(const LogStream::TimeStamp& timeStamp) {
         LogFormat format{ LogComponent::TimeStamp };
         // source_location and log level do not matter here, as they are not used with this format.
-        outStream.get() << 
+        std::osyncstream(outStream.get()) <<
             constructLogMessage(defaultLogLevel, "", std::source_location::current(), format);
         return *this;
     }
 
     Logger::Impl& Logger::Impl::operator<<(const std::source_location& location) {
         LogFormat format{ LogComponent::Context };
-        outStream.get() << constructLogMessage(defaultLogLevel, "", location, format);
+        std::osyncstream(outStream.get()) << 
+            constructLogMessage(defaultLogLevel, "", location, format);
         return *this;
     }
 

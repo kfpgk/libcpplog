@@ -169,8 +169,6 @@ namespace cpplog::logger {
         ///< The stream onto which all logs get written to
 		std::reference_wrapper<std::ostream> outStream;
         
-		mutable std::mutex outMutex; ///< Mutex for the output stream
-
 		///< The format of the log message
         LogFormat format;
 

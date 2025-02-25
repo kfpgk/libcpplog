@@ -49,8 +49,10 @@ There are convenient functions `log` and `logOnce` inside the same namespace, th
  - `logger.log("Some log");`
  - `log("Some log");` 
 
-The log output can be configured via `logger.setOutput(std::ostream&)`.
 The log format can be configured via `logger.setFormat(LogFormat)`.
+The log output can be configured via `logger.setOutput(std::ostream&)`.
+
+> Important: Make sure the `ostream` that has been passed to the `Logger` (either via constructor or via `setOutput()`) does not go out of scope while the logger is using it. This would result in <b>undefined behavior</b>.
 
 As an alternative to logging via `log()`, one can stream into the `logger` object using the stream insertion operator `<<`.
 

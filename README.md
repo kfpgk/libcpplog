@@ -63,6 +63,7 @@ Check below code snippets or the `examples` sub directory for examples.
 ```cpp
 #include <libcpplog/logger/Log.hpp>
 
+#include <fstream>
 #include <sstream>
 #include <string>
 
@@ -128,6 +129,12 @@ int main(int argc, char* argv[]) {
         std::cout,
         { LogComponent::TimeStamp, LogComponent::Context });
     myLogger.log("Custom logger");
+
+    // Log to file in append mode
+    std::ofstream logFile("logFile.txt", std::ios_base::app);
+    myLogger.setOutput(logFile);
+
+    myLogger << LogStream() << "Log to test file" << std::endl;
 
     return 0;
 

@@ -1,6 +1,7 @@
 #include <libcpplog/debug/Debug.hpp>
 #include <libcpplog/logger/Log.hpp>
 
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -97,5 +98,10 @@ void useLogger() {
         std::cout,
         { LogComponent::TimeStamp, LogComponent::Context });
     myLogger.log("Custom logger");
+
+    // Log to file in append mode
+    std::ofstream logFile("logFile.txt", std::ios_base::app);
+    myLogger.setOutput(logFile);
+    myLogger << LogStream() << "Log to test file" << std::endl;
 
 }

@@ -4,7 +4,7 @@
 namespace cpplog::logger::unit_test {
 
     /**
-     * @brief Unit test Logger including Logger::Impl
+     * @brief Unit test for Logger including Logger::Impl
      */
     class LoggerTest {
 

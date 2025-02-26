@@ -125,25 +125,20 @@ namespace cpplog::logger {
         std::unique_ptr<decorator::Message> msg = std::make_unique<decorator::Message>(message);
 
         for (auto component : std::ranges::reverse_view{ format } ) {
-            std::unique_ptr<decorator::Message> tmpMsg;
             switch (component) {
             case LogComponent::Context:
-                tmpMsg = std::make_unique<decorator::context::Short>(
-                    std::move(msg), location);
-                msg = std::move(tmpMsg);
+                msg = std::move(
+                    std::make_unique<decorator::context::Short>(std::move(msg), location));
                 break;
             case LogComponent::ContextLong:
-                tmpMsg = std::make_unique<decorator::context::Long>(
-                    std::move(msg), location);
-                msg = std::move(tmpMsg);
+                msg = std::move(
+                    std::make_unique<decorator::context::Long>(std::move(msg), location));
                 break;
             case LogComponent::LogLevel:
-                tmpMsg = std::make_unique<decorator::LogLevel>(std::move(msg), logLevel);
-                msg = std::move(tmpMsg);
+                msg = std::move(std::make_unique<decorator::LogLevel>(std::move(msg), logLevel));
                 break;
             case LogComponent::TimeStamp:
-                tmpMsg = std::make_unique<decorator::TimeStamp>(std::move(msg));
-                msg = std::move(tmpMsg);
+                msg = std::move(std::make_unique<decorator::TimeStamp>(std::move(msg)));
                 break;
             }
         }

@@ -150,6 +150,25 @@ namespace cpplog::logger::unit_test {
          */
         void testStreamLogStream() const;
 
+        /**
+         * @brief Test copy constructor
+         */
+        void testCopyConstructor() const;
+
+        /**
+         * @brief Test move constructor
+         */
+        void testMoveConstructor() const;
+
+        /**
+         * @brief Test copy assignment operator
+         */
+        void testCopyAssignment() const;
+
+        /**
+         * @brief Test move assignment operator
+         */
+        void testMoveAssignment() const;
     };
 
 }

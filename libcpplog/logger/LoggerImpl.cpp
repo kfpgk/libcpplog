@@ -34,6 +34,14 @@ namespace cpplog::logger {
         this->format = format;
     }
 
+    std::ostream& Logger::Impl::getOutput() const noexcept {
+        return outStream;
+    }
+
+    LogFormat Logger::Impl::getFormat() const noexcept {
+        return format;
+    }
+
     void Logger::Impl::log(
         const std::string_view message,
         const std::source_location location) const {

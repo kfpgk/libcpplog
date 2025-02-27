@@ -36,16 +36,6 @@ namespace cpplog::logger {
         Impl(std::ostream& outStream, LogFormat) noexcept;
 
         /**
-		 * @brief Deleted copy constructor
-         */
-        Impl(const Impl&) = delete;
-
-        /**
-		 * @brief Deleted copy assignment operator
-         */
-        Impl& operator=(const Impl&) = delete;
-
-        /**
 		 * @brief Destructor
          */
         ~Impl() = default;
@@ -64,6 +54,20 @@ namespace cpplog::logger {
 		 * @param[in] format The format of the log message
 		 */
         void setFormat(const LogFormat& format) noexcept;
+
+        /**
+         * @brief Get configured output stream
+         *
+         * @returns The stream that is used by this logger.
+         */
+        std::ostream& getOutput() const noexcept;
+
+        /**
+         * @brief Get the configured log message format 
+         *
+         * @return The format of the log message
+         */
+        LogFormat getFormat() const noexcept;
 
 		/**
          * @brief Logs \p message to configured output stream

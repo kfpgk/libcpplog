@@ -1,7 +1,7 @@
 
 # libcpplog
 
-A modern C++ logging library.
+A C++ logging library.
 
 ## Table of Contents
 

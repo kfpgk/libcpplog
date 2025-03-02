@@ -22,6 +22,7 @@ A C++ logging library.
       - [Static release version](#static-release-version)
       - [Static debug version](#static-debug-version)
   - [Directory structure](#directory-structure)
+  - [Contribute](#contribute)
   - [Credits](#credits)
   - [License](#license)
 
@@ -45,7 +46,7 @@ The library consists of a `logger` package and a `debug` package.
 
 The library provides a global `logger` object of type `Logger` in namespace `cpplog::logger`.
 
-There are convenient functions `log` and `logOnce` inside the same namespace, that forward the calls to this global object. The following two calls are equivalent:
+There are convenient functions `log` and `logOnce` inside the same namespace, that forward the calls to this global object. The following two calls are equivalent (as long as there is no local `logger` object defined):
  - `logger.log("Some log");`
  - `log("Some log");` 
 
@@ -54,7 +55,14 @@ The log output can be configured via `logger.setOutput(std::ostream&)`.
 
 > Important: Make sure the `ostream` that has been passed to the `Logger` (either via constructor or via `setOutput()`) does not go out of scope while the logger is using it. This would result in <b>undefined behavior</b>.
 
-As an alternative to logging via `log()`, one can stream into the `logger` object using the stream insertion operator `<<`.
+As an alternative to logging via `log()`, one can stream into the `logger` object using the stream insertion operator `<<`. When logging like this, use `LogStream()` to stream the currently configured log format, otherwise streaming will result in a raw log message without meta data.
+
+The default log format is equivalent to the one presented by <em>Marius Bancila</em> on his blog post 
+[Writing a simple logging function in C++20](https://mariusbancila.ro/blog/2021/07/03/writing-a-simple-logging-function-in-c20/) and looks like this (example):
+
+<pre>
+[I] | 2025-03-01 19:50:18.2834866 GMT+1 | Skeleton.cpp:run(59:16) | "Log message"
+</pre>
 
 If desired, create your own logger instance using the `Logger` class.
 
@@ -105,6 +113,9 @@ int main(int argc, char* argv[]) {
     // Log only log level and message via stream insertion operator.
     logger << LogLevel::Warning << "This is a streamed warning " << myF << std::endl;
 
+    // You can also do this via the LogStream object in a way that is consistent with timestamp and context.
+    logger << LogStream::logLevel(LogLevel::Warning) << "This will do the same" << std::endl;
+
     // Log only time stamp and message via stream insertion operator.
     logger << LogStream::timeStamp() 
            << "My time stamped streamed log message. Result: " 
@@ -143,7 +154,7 @@ int main(int argc, char* argv[]) {
 
 ### Debug
 
-Debug output that results in no runtime overhead for release builds.
+Debug outputs are implemented using macros that result in no runtime overhead for release builds.
 
 ```cpp
 #include <libcpplog/debug/Debug.hpp>
@@ -294,6 +305,15 @@ cmake --build . --target install --config Debug
 |       +- *.test.hpp
 +- CMakeLists.txt
 </pre>
+
+## Contribute
+
+Check the following things when contributing to this library:
+
+- [ ] UML diagrams affected by change and updated if necessary?
+- [ ] Unit tests added? Unit tests executed (called in the corresponding unit test main() function)? 
+- [ ] Unit tests run successfully?
+- [ ] Is the public API of the library affected by the change?
 
 ## Credits
 

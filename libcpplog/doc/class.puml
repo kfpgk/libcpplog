@@ -1,6 +1,6 @@
 @startuml class-diagram
 
-title libcpplog public class diagram
+title libcpplog public API class diagram
 
 package cpplog::logger {
 

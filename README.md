@@ -10,6 +10,7 @@ A C++ logging library.
   - [Introduction](#introduction)
   - [Features](#features)
   - [Usage](#usage)
+    - [Headers](#headers)
     - [Logging](#logging)
     - [Debug](#debug)
   - [Dependencies](#dependencies)
@@ -41,6 +42,27 @@ This repository holds the source code, documentation and tests for the `C++` log
 ## Usage
 
 The library consists of a `logger` package and a `debug` package.
+
+### Headers
+
+The library provides the following headers.
+
+```cpp
+// Header for global logger object. This header includes the complete libcpplog logger functionality.
+#include <libcpplog/logger/Log.hpp>
+
+// Header for the Logger class only
+#include <libcpplog/logger/Logger.hpp>
+
+// Headers for the various log classes. Including `Log.hpp` or `Logger.hpp` will also include these.
+#include <libcpplog/logger/LogComponent.hpp>
+#include <libcpplog/logger/LogFormat.hpp>
+#include <libcpplog/logger/LogLevel.hpp>
+#include <libcpplog/logger/LogStream.hpp>
+
+// Header for debug macros
+#include <libcpplog/debug/Debug.hpp>
+```
 
 ### Logging
 

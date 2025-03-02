@@ -23,6 +23,8 @@ class LogStream {
     + LogStream()
     + LogStream(LogLevel)
     ..
+    + {static} logLevel() : LogLevel
+    + {static} logLevel(LogLevel) : LogLevel
     + {static} context() : source_location
     + {static} timeStamp : LogStream::TimeStamp
     == private ==

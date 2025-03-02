@@ -74,6 +74,9 @@ void useLogger() {
     // Log only log level and message via stream insertion operator.
     logger << LogLevel::Warning << "This is a streamed warning " << myF << std::endl;
 
+    // You can also do this via the LogStream object in a way that is consistent with timestamp and context.
+    logger << LogStream::logLevel(LogLevel::Warning) << "This will do the same" << std::endl;
+
     // Log only time stamp and message via stream insertion operator.
     logger << LogStream::timeStamp() 
            << "My time stamped streamed log message. Result: " 

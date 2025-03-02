@@ -5,8 +5,8 @@
 namespace cpplog::logger {
 
     LogStream::LogStream(LogLevel logLevel, const std::source_location location) noexcept :
-            logLevel{ logLevel },
-            location{ location } {
+        logLevelAttribute{ logLevel },
+        location{ location } {
 
     }
 
@@ -15,6 +15,10 @@ namespace cpplog::logger {
     }
 
     LogLevel LogStream::getLogLevel() const noexcept {
+        return logLevelAttribute;
+    }
+
+    LogLevel LogStream::logLevel(LogLevel logLevel) noexcept {
         return logLevel;
     }
 

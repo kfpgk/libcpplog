@@ -122,7 +122,13 @@ namespace cpplog::logger::unit_test {
 
         /**
          * @brief Test logging of log level via stream insertion
-         * operator
+         * operator via streaming LogLevel directly
+         */
+        void testStreamLogLevelRaw() const;
+
+        /**
+         * @brief Test logging of log level via stream insertion
+         * operator via LogStream static method
          */
         void testStreamLogLevel() const;
 

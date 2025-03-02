@@ -41,6 +41,8 @@ int main(int argc, char* argv[]) {
 
     test.testStreamStdEndl();
 
+    test.testStreamLogLevelRaw();
+
     test.testStreamLogLevel();
     test.testStreamTimeStamp();
     test.testStreamContext();
@@ -376,6 +378,23 @@ namespace cpplog::logger::unit_test {
         assert(logStream.str() == expected);
     }
 
+    void LoggerTest::testStreamLogLevelRaw() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamLogLevelRaw()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << LogLevel::Error;
+
+        std::regex expected(exptected_format::logLevel + exptected_format::separator);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
     void LoggerTest::testStreamLogLevel() const {
         std::cout << std::source_location::current().file_name()
             << "(" << std::source_location::current().line() << ")"
@@ -384,7 +403,7 @@ namespace cpplog::logger::unit_test {
         std::stringstream logStream;
         Logger logger(logStream);
 
-        logger << LogLevel::Error;
+        logger << LogStream::logLevel(LogLevel::Error);
 
         std::regex expected(exptected_format::logLevel + exptected_format::separator);
 

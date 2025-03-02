@@ -24,6 +24,8 @@ package cpplog::logger {
         + LogStream()
         + LogStream(LogLevel)
         ..
+        + {static} logLevel() : LogLevel
+        + {static} logLevel() : LogLevel
         + {static} context() : source_location
         + {static} timeStamp() : LogStream::TimeStamp
     }

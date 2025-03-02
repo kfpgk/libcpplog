@@ -4,7 +4,7 @@
 namespace cpplog::logger::unit_test {
 
     /**
-     * @brief Unit test Logger including Logger::Impl
+     * @brief Unit test for Logger including Logger::Impl
      */
     class LoggerTest {
 
@@ -122,7 +122,13 @@ namespace cpplog::logger::unit_test {
 
         /**
          * @brief Test logging of log level via stream insertion
-         * operator
+         * operator via streaming LogLevel directly
+         */
+        void testStreamLogLevelRaw() const;
+
+        /**
+         * @brief Test logging of log level via stream insertion
+         * operator via LogStream static method
          */
         void testStreamLogLevel() const;
 
@@ -150,6 +156,25 @@ namespace cpplog::logger::unit_test {
          */
         void testStreamLogStream() const;
 
+        /**
+         * @brief Test copy constructor
+         */
+        void testCopyConstructor() const;
+
+        /**
+         * @brief Test move constructor
+         */
+        void testMoveConstructor() const;
+
+        /**
+         * @brief Test copy assignment operator
+         */
+        void testCopyAssignment() const;
+
+        /**
+         * @brief Test move assignment operator
+         */
+        void testMoveAssignment() const;
     };
 
 }

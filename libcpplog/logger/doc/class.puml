@@ -1,11 +1,12 @@
 @startuml logger-class-diagram
 
-title libcpplog logger class diagram
+title libcpplog logger class diagram (cpplog::logger)
 
 enum LogLevel {
-    Info
-    Warning
     Error
+    Info
+    Result
+    Warning
 }
 hide LogLevel methods
 
@@ -15,17 +16,20 @@ enum LogComponent {
     ContextLong
     TimeStamp
 }
+hide LogComponent methods
 
 class LogStream {
     == public ==
     + LogStream()
     + LogStream(LogLevel)
     ..
+    + {static} logLevel() : LogLevel
+    + {static} logLevel(LogLevel) : LogLevel
     + {static} context() : source_location
     + {static} timeStamp : LogStream::TimeStamp
     == private ==
     - location : source_location
-    - logLevel : LogLevel
+    - logLevelAttribute : LogLevel
 }
 
 class LogFormat {
@@ -41,27 +45,58 @@ class LogFormat {
     - components : LogComponent[ ]
 }
 
-class Logger {
-    == public ==
-    + Logger(ostream&, LogFormat)
-    ..
-    + setOutput(ostream&) : void
-    + setFormat(LogFormat) : void
-    ..
-    + log(string) : void
-    + log(LogLevel, string) : void
-    + logOnce(string) : void
-    + logOnce(LogLevel, string) : void
-    ..
-    + operator<<(string) : Logger&
-    + operator<<(float) : Logger&
-    + operator<<(enum LogStream) : Logger&
-    + operator<<(enum LogLevel) : Logger&
-    + operator<<(LogStream::TimeStamp) : Logger&
-    + operator<<(source_location) : Logger&
-    == private ==
-    - pImpl : Logger::Impl*
+package Logger as LoggerPackage {
+    class Logger {
+        == public ==
+        + Logger(ostream&, LogFormat)
+        ..
+        + setOutput(ostream&) : void
+        + setFormat(LogFormat) : void
+        ..
+        + log(string) : void
+        + log(LogLevel, string) : void
+        + logOnce(string) : void
+        + logOnce(LogLevel, string) : void
+        ..
+        + operator<<(string) : Logger&
+        + operator<<(float) : Logger&
+        + operator<<(enum LogStream) : Logger&
+        + operator<<(enum LogLevel) : Logger&
+        + operator<<(LogStream::TimeStamp) : Logger&
+        + operator<<(source_location) : Logger&
+        == private ==
+        - pImpl : Logger::Impl*
+    }
+
+    class "Logger::Impl" as LoggerImpl {
+        == public ==
+        + Logger::Impl(ostream&, LogFormat)
+        ..
+        + setOutput(ostream&) : void
+        + setFormat(LogFormat) : void
+        ..
+        + log(string) : void
+        + log(LogLevel, string) : void
+        + logOnce(string) : void
+        + logOnce(LogLevel, string) : void
+        ..
+        + operator<< <T>(T) : Logger::Impl&
+        + operator<<(enum LogStream) : Logger::Impl&
+        + operator<<(enum LogLevel) : Logger::Impl&
+        + operator<<(LogStream::TimeStamp) : Logger::Impl&
+        + operator<<(source_location) : Logger::Impl&
+        == private ==
+        - outputStream : ostream&
+        - outMutex : mutex
+        - loggedOnceMessages : string[ ]
+        - mutexForLoggedMsg : mutex
+        - format : LogFormat
+        --
+        - buildMessageKey(string, location) : string
+        - constructLogMessage(LogLevel, string, LogFormat, source_location) : string
+    }
 }
+
 
 class "<<globals>>" as globals << (G,#FF77FF) >> {
     logger : Logger
@@ -75,52 +110,21 @@ class "<<globals>>" as globals << (G,#FF77FF) >> {
     logOnce(LogLevel, string) : void
 }
 
-class "Logger::Impl" as LoggerImpl {
-    == public ==
-    + Logger::Impl(ostream&, LogFormat)
-    ..
-    + setOutput(ostream&) : void
-    + setFormat(LogFormat) : void
-    ..
-    + log(string) : void
-    + log(LogLevel, string) : void
-    + logOnce(string) : void
-    + logOnce(LogLevel, string) : void
-    ..
-    + operator<< <T>(T) : Logger::Impl&
-    + operator<<(enum LogStream) : Logger::Impl&
-    + operator<<(enum LogLevel) : Logger::Impl&
-    + operator<<(LogStream::TimeStamp) : Logger::Impl&
-    + operator<<(source_location) : Logger::Impl&
-    == private ==
-    - outputStream : ostream&
-    - outMutex : mutex
-    - loggedOnceMessages : string[ ]
-    - mutexForLoggedMsg : mutex
-    - format : LogFormat
-    --
-    - buildMessageKey(string, location) : string
-    - constructLogMessage(LogLevel, string, LogFormat, source_location) : string
-}
-
 Logger "1" o-- "1" LoggerImpl
 
-LogLevel - Logger
-LogComponent - Logger
-LogStream - Logger
+LogFormat - LoggerPackage
+LogLevel - LoggerPackage
+LogComponent - LoggerPackage
 
-LogLevel - LoggerImpl
-LogComponent - LoggerImpl
-LogStreamComponent - LoggerImpl
+LoggerPackage -- LogStream
 
-LogLevel -left- globals
-LogComponent -left- globals
-LogStreamComponent -left- globals
-
-Logger - LogFormat
-LoggerImpl - LogFormat 
 globals - LogFormat
+globals - LogLevel
+globals - LogComponent
 
-globals -> Logger
+LogFormat -[hidden]down-> LogLevel
+LogLevel -[hidden]down-> LogComponent
+
+globals -left-> LoggerPackage
 
 @enduml

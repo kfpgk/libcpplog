@@ -44,14 +44,24 @@ namespace cpplog::logger {
         ~Logger();
 
         /**
-		 * @brief Deleted copy constructor 
+		 * @brief Copy constructor 
          */
-        Logger(const Logger&) = delete;
+        Logger(const Logger& rhs) noexcept;
 
         /**
-         * @brief Deleted assignment operator
+         * @brief Move constructor
          */
-        Logger& operator=(const Logger&) = delete;
+        Logger(Logger&& rhs) noexcept;
+
+        /**
+         * @brief Combined copy and move assignment operator
+         */
+        Logger& operator=(Logger rhs) noexcept;
+
+        /**
+         * @brief Swap method
+         */
+        friend void swap(Logger& lhs, Logger& rhs) noexcept;
 
         /**
          * @brief Configure output stream

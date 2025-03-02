@@ -9,15 +9,6 @@ find_package(LIBCPPLOG
     REQUIRED
 )
 
-find_library(LIBCPPLOG
-    NAMES
-        cpplog
-        libcpplog
-    REQUIRED
-    HINTS 
-        "${LIBCPPLOG_LIBRARY_DIR}"
-)
-
 target_link_libraries(basic_usage
     PRIVATE
         ${LIBCPPLOG}

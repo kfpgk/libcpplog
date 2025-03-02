@@ -1,6 +1,7 @@
 #include <libcpplog/debug/Debug.hpp>
 #include <libcpplog/logger/Log.hpp>
 
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -73,6 +74,9 @@ void useLogger() {
     // Log only log level and message via stream insertion operator.
     logger << LogLevel::Warning << "This is a streamed warning " << myF << std::endl;
 
+    // You can also do this via the LogStream object in a way that is consistent with timestamp and context.
+    logger << LogStream::logLevel(LogLevel::Warning) << "This will do the same" << std::endl;
+
     // Log only time stamp and message via stream insertion operator.
     logger << LogStream::timeStamp() 
            << "My time stamped streamed log message. Result: " 
@@ -97,5 +101,10 @@ void useLogger() {
         std::cout,
         { LogComponent::TimeStamp, LogComponent::Context });
     myLogger.log("Custom logger");
+
+    // Log to file in append mode
+    std::ofstream logFile("logFile.txt", std::ios_base::app);
+    myLogger.setOutput(logFile);
+    myLogger << LogStream() << "Log to test file" << std::endl;
 
 }

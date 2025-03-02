@@ -1,29 +1,34 @@
 @startuml class-diagram
 
-title libcpplog class interface diagram
+title libcpplog public API class diagram
 
-package public {
+package cpplog::logger {
 
     enum LogLevel {
-        Info
-        Warning
         Error
+        Info
+        Result
+        Warning
     }
     hide LogLevel methods
 
     enum LogComponent {
-        None
-        ..
         LogLevel
         Context
         ContextLong
         TimeStamp
     }
+    hide LogComponent methods
 
-    enum LogStreamComponent {
-        TimeStamp
+    class LogStream {
+        + LogStream()
+        + LogStream(LogLevel)
+        ..
+        + {static} logLevel() : LogLevel
+        + {static} logLevel() : LogLevel
+        + {static} context() : source_location
+        + {static} timeStamp() : LogStream::TimeStamp
     }
-    hide LogStreamComponent methods
 
     class LogFormat << (D,#0077AA) >> {
         LogComponent[ ]
@@ -43,8 +48,9 @@ package public {
         ..
         + operator<<(string) : Logger&
         + operator<<(float) : Logger&
+        + operator<<(LogStream) : Logger&
         + operator<<(enum LogLevel) : Logger&
-        + operator<<(enum LogStreamComponent) : Logger&
+        + operator<<(LogStream::TimeStamp) : Logger&
         + operator<<(source_location) : Logger&
     }
 

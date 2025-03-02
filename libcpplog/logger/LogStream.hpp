@@ -8,7 +8,15 @@
 namespace cpplog::logger {
 
     /**
-     * @brief Log stream class to created formatted streams
+     * @brief Log stream class that provides formatted streams
+     * 
+     * Use this class when you want to add log meta data when
+     * streaming via the stream insertion operator.
+     * Streaming an instance of `LogStream()` will log the 
+     * currently configured LogFormat.
+     * 
+     * Log component can also be streamed independently using the
+     * static methods `logLevel()`, `context()` & `timeStamp()`.
      */
     class LogStream {
 
@@ -35,6 +43,13 @@ namespace cpplog::logger {
         LogLevel getLogLevel() const noexcept;
 
         /**
+         * @brief Returns a log level for streaming
+         * 
+         * @param[in] logLevel The log level to be streamed
+         */
+        static LogLevel logLevel(LogLevel logLevel = log_level::defaultValue) noexcept;
+
+        /**
          * @brief Returns a context for streaming
          * 
          * @param[in] location Location of the context that
@@ -59,7 +74,7 @@ namespace cpplog::logger {
         std::source_location location;
 
         ///< log level
-        LogLevel logLevel;
+        LogLevel logLevelAttribute;
 
     };
 

@@ -41,10 +41,17 @@ int main(int argc, char* argv[]) {
 
     test.testStreamStdEndl();
 
+    test.testStreamLogLevelRaw();
+
     test.testStreamLogLevel();
     test.testStreamTimeStamp();
     test.testStreamContext();
     test.testStreamLogLevelTimeStampContext();
+
+    test.testCopyConstructor();
+    test.testMoveConstructor();
+    test.testCopyAssignment();
+    test.testMoveAssignment();
 
     std::cout << "UT: logger::logger passed." << std::endl;
     return 0;
@@ -371,6 +378,23 @@ namespace cpplog::logger::unit_test {
         assert(logStream.str() == expected);
     }
 
+    void LoggerTest::testStreamLogLevelRaw() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamLogLevelRaw()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << LogLevel::Error;
+
+        std::regex expected(exptected_format::logLevel + exptected_format::separator);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
     void LoggerTest::testStreamLogLevel() const {
         std::cout << std::source_location::current().file_name()
             << "(" << std::source_location::current().line() << ")"
@@ -379,7 +403,7 @@ namespace cpplog::logger::unit_test {
         std::stringstream logStream;
         Logger logger(logStream);
 
-        logger << LogLevel::Error;
+        logger << LogStream::logLevel(LogLevel::Error);
 
         std::regex expected(exptected_format::logLevel + exptected_format::separator);
 
@@ -466,6 +490,108 @@ namespace cpplog::logger::unit_test {
             "Logger\\.test\\.cpp:testStreamLogLevelTimeStampContext" +
             exptected_format::lineNo + exptected_format::separator +
             "Rich error log message");
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testCopyConstructor() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testCopyConstructor()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(
+            logStream,
+            LogFormat{ LogComponent::LogLevel });
+
+        Logger secondLogger(logger);
+
+        secondLogger.log("Test log");
+        logger.logOnce("Another log");
+
+        std::regex expected(
+            exptected_format::logLevel + exptected_format::separator +
+            "Test log\n" +
+            exptected_format::logLevel + exptected_format::separator +
+            "Another log\n",
+            std::regex_constants::ECMAScript);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testMoveConstructor() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testMoveConstructor()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(
+            logStream,
+            LogFormat{ LogComponent::LogLevel });
+
+        Logger secondLogger(std::move(logger));
+
+        secondLogger.log("Test log");
+
+        std::regex expected(
+            exptected_format::logLevel + exptected_format::separator +
+            "Test log\n",
+            std::regex_constants::ECMAScript);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testCopyAssignment() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testCopyAssignment()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(
+            logStream,
+            LogFormat{ LogComponent::LogLevel });
+
+        Logger secondLogger = logger;
+
+        secondLogger.log("Test log");
+        logger.logOnce("Another log");
+
+        std::regex expected(
+            exptected_format::logLevel + exptected_format::separator +
+            "Test log\n" +
+            exptected_format::logLevel + exptected_format::separator +
+            "Another log\n",
+            std::regex_constants::ECMAScript);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testMoveAssignment() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testMoveAssignment()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(
+            logStream,
+            LogFormat{ LogComponent::LogLevel });
+
+        Logger secondLogger = std::move(logger);
+
+        secondLogger.log("Test log");
+
+        std::regex expected(
+            exptected_format::logLevel + exptected_format::separator +
+            "Test log\n",
+            std::regex_constants::ECMAScript);
 
         DEBUG("Actual: '" << logStream.str() << "'");
 

@@ -8,7 +8,7 @@ class Context {
     ..
     + getString() : string
     == protected ==
-    # source_location : string
+    # location : source_location
     == private ==
     - {abstract} getFunctionName() : string
     - buildString() : string

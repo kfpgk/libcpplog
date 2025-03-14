@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -67,6 +68,13 @@ void useLogger() {
     // There is a convenient overload taking a LogRequest::functionName() as second argument.
     // Suitable e.g. for logging during unit testing
     logger.log("Running ", LogRequest::functionName());
+
+	// Log an exception. The logger will unwrap nested exceptions automatically.
+    try {
+		throw std::runtime_error("This is an exception");
+	} catch (const std::exception& e) {
+		logger.log(e);
+	}
 
     // Log via stream insertion operator. This is unformatted.
     logger << "Plain streamed log message" << std::endl;

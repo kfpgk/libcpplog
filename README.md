@@ -129,6 +129,13 @@ int main(int argc, char* argv[]) {
     // Suitable e.g. for logging during unit testing
     logger.log("Running ", LogRequest::functionName());
 
+	// Log an exception. The logger will unwrap nested exceptions if there are any.
+    try {
+		throw std::runtime_error("This is an exception");
+	} catch (const std::exception& e) {
+		logger.log(e);
+	}
+
     // Log via stream insertion operator. This is unformatted.
     logger << "Plain streamed log message" << std::endl;
 

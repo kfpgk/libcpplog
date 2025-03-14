@@ -11,6 +11,7 @@
 #include <mutex>
 #include <ostream>
 #include <source_location>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <unordered_set>
@@ -129,7 +130,6 @@ namespace cpplog::logger {
 
         /**
          * @brief Logs \p functionName to configured output stream
-         * using .
          *
          * @param[in] message The message preceeding the function name
          * @param[in] functionName The function name to be logged
@@ -140,7 +140,6 @@ namespace cpplog::logger {
 
         /**
          * @brief Logs \p functionName to configured output stream
-         * using .
          *
          * @param[in] logLevel The log level of the message
          * @param[in] message The message preceeding the function name
@@ -150,6 +149,48 @@ namespace cpplog::logger {
             LogLevel logLevel,
             const std::string_view message,
             const LogRequest::FunctionName& functionName) const;
+
+        /**
+         * @brief Logs \p exception to configured output stream
+         *
+         * @param[in] exception The exception including nested
+         * exceptions to be logged
+         * @param[in] location Gets filled automatically via
+         * default values to represent the caller's context.
+         */
+        void log(
+            const std::exception& exception,
+            const std::source_location location) const;
+
+        /**
+         * @brief Logs \p exception to configured output stream
+         *
+         * @param[in] logLevel The log level of the message
+         * @param[in] exception The exception including nested
+         * exceptions to be logged
+         * @param[in] location Gets filled automatically via
+         * default values to represent the caller's context.
+         */
+        void log(
+            LogLevel logLevel,
+            const std::exception& exception,
+            const std::source_location location) const;
+
+        /**
+         * @brief Logs \p exception to configured output stream
+         *
+         * @param[in] logLevel The log level of the message
+		 * qparam[in] indent The indentation level of the message
+         * @param[in] exception The exception including nested
+         * exceptions to be logged
+         * @param[in] location Gets filled automatically via
+         * default values to represent the caller's context.
+         */
+        void log(
+            LogLevel logLevel,
+			const std::string_view indent,
+            const std::exception& exception,
+            const std::source_location location) const;
 
         /**
          * @brief Insertion operator overload for `std::endl`

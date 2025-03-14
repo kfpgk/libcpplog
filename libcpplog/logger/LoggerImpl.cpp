@@ -102,6 +102,36 @@ namespace cpplog::logger {
 		log(prefix + shortFunctionName.extract() + "()" + suffix, functionName.getLocation());
     }
 
+    void Logger::Impl::log(
+        const std::exception& exception,
+        const std::source_location location) const {
+
+		log(LogLevel::Error, exception, location);
+    }
+
+    void Logger::Impl::log(
+        LogLevel logLevel,
+        const std::exception& exception,
+        const std::source_location location) const {
+
+        log(logLevel, "", exception, location);
+    }
+
+    void Logger::Impl::log(
+        LogLevel logLevel,
+        const std::string_view indent,
+        const std::exception& exception,
+        const std::source_location location) const {
+
+        log(logLevel, std::string(indent) + exception.what(), location);
+        try {
+            std::rethrow_if_nested(exception);
+        }
+        catch (const std::exception& e) {
+            log(logLevel, std::string(indent) + "  ", e, location);
+        }
+    }
+
     Logger::Impl& Logger::Impl::operator<<(
         decltype(std::endl<char, std::char_traits<char>>) endl) {
 

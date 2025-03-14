@@ -107,6 +107,16 @@ namespace cpplog::logger::unit_test {
         void testLogFunctionNameWithSeparator() const;
 
         /**
+         * @brief Test logging an exception
+         */
+        void testLogException() const;
+
+        /**
+         * @brief Test logging a nested exception
+         */
+        void testLogNestedException() const;
+
+        /**
          * @brief Test logging strings via stream insertion 
          * operator 
          */

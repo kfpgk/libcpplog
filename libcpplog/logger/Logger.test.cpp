@@ -38,6 +38,9 @@ int main(int argc, char* argv[]) {
     test.testLogFunctionName();
     test.testLogFunctionNameWithSeparator();
 
+	test.testLogException();
+	test.testLogNestedException();
+
 	test.testStreamString();
     test.testStreamInt();
     test.testStreamFloat();
@@ -346,6 +349,65 @@ namespace cpplog::logger::unit_test {
             std::regex_constants::ECMAScript);
 
         DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testLogException() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogException()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        try {
+			throw std::runtime_error("Test exception");
+		} catch (const std::exception& e) {
+            logger.log(e);
+        }
+
+        std::regex expected(
+            exptected_format::logLevel + exptected_format::separator +
+            exptected_format::timeStamp + exptected_format::separator +
+            "Logger\\.test\\.cpp:testLogException" +
+            exptected_format::lineNo + exptected_format::separator +
+            "Test exception\n",
+            std::regex_constants::ECMAScript);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testLogNestedException() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogNestedException()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(
+            logStream,
+            LogFormat{ });
+
+        try {
+            throw std::runtime_error("Inner exception");
+		}
+		catch (const std::exception& e) {
+			try {
+				std::throw_with_nested(std::runtime_error("Outer exception"));
+			}
+			catch (const std::exception& e) {
+				logger.log(e);
+			}
+		}
+
+        std::regex expected(
+            "Outer exception\n" \
+			"  Inner exception\n",
+            std::regex_constants::ECMAScript);
+
+        DEBUG("Actual: '\n" << logStream.str() << "'");
 
         assert(std::regex_match(logStream.str(), expected));
     }

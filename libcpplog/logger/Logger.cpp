@@ -90,6 +90,21 @@ namespace cpplog::logger {
         pImpl->log(logLevel, message, functionName);
     }
 
+    void Logger::log(
+        const std::exception& exception,
+        const std::source_location location) const {
+
+		pImpl->log(exception, location);
+    }
+
+    void Logger::log(
+		LogLevel logLevel,
+        const std::exception& exception,
+        const std::source_location location) const {
+
+        pImpl->log(logLevel, exception, location);
+    }
+
     Logger& Logger::operator<<(const std::string_view string) {
         *pImpl << string;
         return *this;

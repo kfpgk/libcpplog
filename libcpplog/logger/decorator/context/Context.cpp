@@ -10,21 +10,22 @@
 namespace cpplog::logger::decorator::context {
 
     Context::Context(
-        std::unique_ptr<Message> message, const std::source_location location) noexcept :
-            Decorator{ std::move(message) },
+        std::unique_ptr<Message> message,
+        const std::source_location location,
+        bool useSeparator) noexcept :
+            Decorator{ std::move(message), useSeparator },
             location{ location } {
 
     }
 
     std::string Context::getString() const {
-        return buildString() + getSeparator() + message->getString();
+        return buildString() + getSeparatorInternal() + message->getString();
     }
 
     /**
      * @brief Builds a string from the context
      *
      * credits: Marius Bancila
-     *
      */
     std::string Context::buildString() const {
         return std::format("{}:{}({}:{})",

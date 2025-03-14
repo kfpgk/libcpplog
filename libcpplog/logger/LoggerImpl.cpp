@@ -1,11 +1,15 @@
 #include <libcpplog/logger/LoggerImpl.hpp>
 #include <libcpplog/logger/LogComponent.hpp>
 #include <libcpplog/logger/LogFormat.hpp>
+#include <libcpplog/logger/decorator/Decorator.hpp>
 #include <libcpplog/logger/decorator/LogLevel.hpp>
 #include <libcpplog/logger/decorator/Message.hpp>
 #include <libcpplog/logger/decorator/TimeStamp.hpp>
 #include <libcpplog/logger/decorator/context/Short.hpp>
 #include <libcpplog/logger/decorator/context/Long.hpp>
+#include <libcpplog/logger/decorator/function_name/Short.hpp>
+#include <libcpplog/logger/decorator/function_name/Long.hpp>
+#include <libcpplog/logger/decorator/function_name/ShortStore.hpp>
 #include <libcpplog/debug/Debug.hpp>
 
 #include <memory>
@@ -80,6 +84,24 @@ namespace cpplog::logger {
         }
     }
 
+    void Logger::Impl::log(
+        const std::string_view message,
+        const LogRequest::FunctionName& functionName) const {
+
+        log(defaultLogLevel, message, functionName);
+    }
+
+    void Logger::Impl::log(
+		LogLevel logLevel,
+        const std::string_view message,
+        const LogRequest::FunctionName& functionName) const {
+
+        decorator::function_name::ShortStore shortFunctionName(functionName.getLocation());
+        std::string prefix = message.empty() ? "" : std::string(message) + " ";
+		std::string suffix = functionName.userWantsSeparator() ? decorator::Decorator::getSeparator() : "";
+		log(prefix + shortFunctionName.extract() + "()" + suffix, functionName.getLocation());
+    }
+
     Logger::Impl& Logger::Impl::operator<<(
         decltype(std::endl<char, std::char_traits<char>>) endl) {
 
@@ -87,7 +109,7 @@ namespace cpplog::logger {
         return *this;
     }
 
-    Logger::Impl& Logger::Impl::operator<<(const LogStream& stream) {
+    Logger::Impl& Logger::Impl::operator<<(const LogRequest& stream) {
         std::osyncstream(outStream.get()) <<
             constructLogMessage(stream.getLogLevel(), "", stream.getLocation(), format);
         return *this;
@@ -101,18 +123,40 @@ namespace cpplog::logger {
 		return *this;
 	}
 
-    Logger::Impl& Logger::Impl::operator<<(const LogStream::TimeStamp& timeStamp) {
-        LogFormat format{ LogComponent::TimeStamp };
-        // source_location and log level do not matter here, as they are not used with this format.
+    Logger::Impl& Logger::Impl::operator<<(const LogRequest::Context& context) {
+        LogFormat format{ LogComponent::Context };
         std::osyncstream(outStream.get()) <<
-            constructLogMessage(defaultLogLevel, "", std::source_location::current(), format);
+            constructLogMessage(
+                defaultLogLevel,
+                "",
+                context.getLocation(),
+                format,
+                !context.userDisabledSeparator());
         return *this;
     }
 
-    Logger::Impl& Logger::Impl::operator<<(const std::source_location& location) {
-        LogFormat format{ LogComponent::Context };
-        std::osyncstream(outStream.get()) << 
-            constructLogMessage(defaultLogLevel, "", location, format);
+    Logger::Impl& Logger::Impl::operator<<(const LogRequest::TimeStamp& timeStamp) {
+        LogFormat format{ LogComponent::TimeStamp };
+        // source_location and log level do not matter here, as they are not used with this format.
+        std::osyncstream(outStream.get()) <<
+            constructLogMessage(
+                defaultLogLevel,
+                "",
+                std::source_location::current(),
+                format,
+                !timeStamp.userDisabledSeparator());
+        return *this;
+    }
+
+    Logger::Impl& Logger::Impl::operator<<(const LogRequest::FunctionName& functionName) {
+        LogFormat format{ LogComponent::Function };
+        std::osyncstream(outStream.get()) <<
+            constructLogMessage(
+                defaultLogLevel,
+                "",
+                functionName.getLocation(),
+                format,
+                !functionName.userDisabledSeparator());
         return *this;
     }
 
@@ -128,7 +172,8 @@ namespace cpplog::logger {
         LogLevel logLevel,
         const std::string_view message,
         const std::source_location& location,
-        LogFormat format) const {
+        LogFormat format,
+        bool useSeparator) const {
 
         std::unique_ptr<decorator::Message> msg = std::make_unique<decorator::Message>(message);
 
@@ -136,17 +181,31 @@ namespace cpplog::logger {
             switch (component) {
             case LogComponent::Context:
                 msg = std::move(
-                    std::make_unique<decorator::context::Short>(std::move(msg), location));
+                    std::make_unique<decorator::context::Short>(
+                        std::move(msg), location, useSeparator));
                 break;
             case LogComponent::ContextLong:
                 msg = std::move(
-                    std::make_unique<decorator::context::Long>(std::move(msg), location));
+                    std::make_unique<decorator::context::Long>(
+                        std::move(msg), location, useSeparator));
+                break;
+            case LogComponent::Function:
+                msg = std::move(
+                    std::make_unique<decorator::function_name::Short>(
+                        std::move(msg), location, useSeparator));
+                break;
+            case LogComponent::FunctionLong:
+                msg = std::move(
+                    std::make_unique<decorator::function_name::Long>(
+                        std::move(msg), location, useSeparator));
                 break;
             case LogComponent::LogLevel:
-                msg = std::move(std::make_unique<decorator::LogLevel>(std::move(msg), logLevel));
+                msg = std::move(std::make_unique<decorator::LogLevel>(
+                    std::move(msg), logLevel, useSeparator));
                 break;
             case LogComponent::TimeStamp:
-                msg = std::move(std::make_unique<decorator::TimeStamp>(std::move(msg)));
+                msg = std::move(std::make_unique<decorator::TimeStamp>(
+                    std::move(msg), useSeparator));
                 break;
             }
         }

@@ -75,6 +75,21 @@ namespace cpplog::logger {
         pImpl->logOnce(logLevel, message, location);
     }
 
+    void Logger::log(
+        const std::string_view message,
+        const LogRequest::FunctionName& functionName) const {
+
+        pImpl->log(message, functionName);
+    }
+
+    void Logger::log(
+        LogLevel logLevel,
+        const std::string_view message,
+        const LogRequest::FunctionName& functionName) const {
+
+        pImpl->log(logLevel, message, functionName);
+    }
+
     Logger& Logger::operator<<(const std::string_view string) {
         *pImpl << string;
         return *this;
@@ -90,7 +105,7 @@ namespace cpplog::logger {
         return *this;
     }
 
-    Logger& Logger::operator<<(const LogStream& stream) {
+    Logger& Logger::operator<<(const LogRequest& stream) {
         *pImpl << stream;
         return *this;
     }
@@ -100,13 +115,18 @@ namespace cpplog::logger {
         return *this;
     }
 
-    Logger& Logger::operator<<(const LogStream::TimeStamp& timeStamp) {
+    Logger& Logger::operator<<(const LogRequest::Context& context) {
+        *pImpl << context;
+        return *this;
+    }
+
+    Logger& Logger::operator<<(const LogRequest::TimeStamp& timeStamp) {
         *pImpl << timeStamp;
         return *this;
     }
 
-    Logger& Logger::operator<<(std::source_location location) {
-        *pImpl << location;
+    Logger& Logger::operator<<(const LogRequest::FunctionName& functionName) {
+        *pImpl << functionName;
         return *this;
     }
 

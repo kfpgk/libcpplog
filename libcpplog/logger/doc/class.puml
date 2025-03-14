@@ -14,23 +14,70 @@ enum LogComponent {
     LogLevel
     Context
     ContextLong
+    Function
+    FunctionLong
     TimeStamp
 }
 hide LogComponent methods
 
-class LogStream {
-    == public ==
-    + LogStream()
-    + LogStream(LogLevel)
-    ..
-    + {static} logLevel() : LogLevel
-    + {static} logLevel(LogLevel) : LogLevel
-    + {static} context() : source_location
-    + {static} timeStamp : LogStream::TimeStamp
-    == private ==
-    - location : source_location
-    - logLevelAttribute : LogLevel
+enum Separator {
+    def
+    none
+    use
 }
+hide Separator methods
+
+package "LogRequest" as LogRequestPackage {
+
+    class LogRequest {
+        == public ==
+        + LogRequest()
+        + LogRequest(LogLevel)
+        ..
+        + {static} logLevel() : LogLevel
+        + {static} logLevel(LogLevel) : LogLevel
+        + {static} context() : LogRequest::Context
+        + {static} timeStamp() : LogRequest::TimeStamp
+        + {static} functionName() : LogRequest::FunctionName
+        == private ==
+        - location : source_location
+        - logLevelAttribute : LogLevel
+    }
+
+    class RequestObject {
+        == public ==
+        + RequestObject(Separator)
+        ..
+        + userWantsSeparator() : bool
+        + userDisabledSeparator() : bool
+        == private ==
+        - sep : Separator
+    }
+
+    class Context {
+        == public ==
+        + Context(Separator, source_location)
+        ..
+        + getLocation() : source_location
+        == private ==
+        location : source_location
+    }
+
+    class TimeStamp {
+        == public ==
+        + TimeStamp(Separator)
+    }
+
+    class FunctionName {
+        == public ==
+        + FunctionName(Separator, source_location)
+        ..
+        + getLocation() : source_location
+        == private ==
+        - location : source_location
+    }
+}
+
 
 class LogFormat {
     == public ==
@@ -57,13 +104,16 @@ package Logger as LoggerPackage {
         + log(LogLevel, string) : void
         + logOnce(string) : void
         + logOnce(LogLevel, string) : void
+        + log(string, LogRequest::FunctionName) : void
+        + log(LogLevel, string, LogRequest::FunctionName) : void
         ..
         + operator<<(string) : Logger&
         + operator<<(float) : Logger&
-        + operator<<(enum LogStream) : Logger&
+        + operator<<(LogRequest) : Logger&
         + operator<<(enum LogLevel) : Logger&
-        + operator<<(LogStream::TimeStamp) : Logger&
-        + operator<<(source_location) : Logger&
+        + operator<<(LogRequest::Context) : Logger&
+        + operator<<(LogRequest::TimeStamp) : Logger&
+        + operator<<(LogRequest::FunctionName) : Logger&
         == private ==
         - pImpl : Logger::Impl*
     }
@@ -79,11 +129,13 @@ package Logger as LoggerPackage {
         + log(LogLevel, string) : void
         + logOnce(string) : void
         + logOnce(LogLevel, string) : void
+        + log(string, LogRequest::FunctionName) : void
+        + log(LogLevel, string, LogRequest::FunctionName) : void
         ..
         + operator<< <T>(T) : Logger::Impl&
-        + operator<<(enum LogStream) : Logger::Impl&
+        + operator<<(LogRequest) : Logger::Impl&
         + operator<<(enum LogLevel) : Logger::Impl&
-        + operator<<(LogStream::TimeStamp) : Logger::Impl&
+        + operator<<(LogRequest::TimeStamp) : Logger::Impl&
         + operator<<(source_location) : Logger::Impl&
         == private ==
         - outputStream : ostream&
@@ -110,13 +162,24 @@ class "<<globals>>" as globals << (G,#FF77FF) >> {
     logOnce(LogLevel, string) : void
 }
 
+LogRequestPackage -- Separator
+LoggerPackage -- Separator
+
+RequestObject <|-- Context 
+RequestObject <|-- TimeStamp 
+RequestObject <|-- FunctionName
+
+LogRequest --> Context
+LogRequest --> TimeStamp
+LogRequest --> FunctionName
+
 Logger "1" o-- "1" LoggerImpl
 
 LogFormat - LoggerPackage
 LogLevel - LoggerPackage
 LogComponent - LoggerPackage
 
-LoggerPackage -- LogStream
+LoggerPackage -- LogRequest
 
 globals - LogFormat
 globals - LogLevel

@@ -1,0 +1,54 @@
+@startuml logger-decorator-function_name-class-diagram
+
+title libcpplog logger::decorator::function_name class diagram
+
+class FunctionName {
+    == public ==
+    + FunctionName(Message*)
+    ..
+    + getString() : string
+    == private ==
+    - {abstract} getFunctionName() : string
+}
+
+class Long {
+    == public ==
+    + Long(Message*)
+    == private ==
+    - functionName : LongStore
+    - getFunctionName() : string
+}
+
+class Short {
+    == public ==
+    + Short(Message*)
+    == private ==
+    - functionName : ShortStore
+    - getFunctionName() : string
+}
+
+class LongStore {
+    == public ==
+    + Long(source_location)
+    ..
+    + extract() : string
+    == private ==
+    - location : source_location
+}
+
+class ShortStore {
+    == public ==
+    + Short(source_location)
+    ..
+    + extract() : string
+    == private ==
+    - location : source_location
+}
+
+FunctionName <|-- Long
+FunctionName <|-- Short
+
+Long o-- "1" LongStore
+Short o-- "1" ShortStore
+
+@enduml

@@ -10,7 +10,7 @@ namespace cpplog::logger::decorator::context::unit_test {
 	 */
 	class ContextTest {
 	public:
-		///< The default separator including escape characters for use in regular expressions
+		///< The expected line format of the context class for use in regular expressions
 		static constexpr std::string_view expectedLineFormat{ "\\([0-9]+:[0-9]+\\)" };
 	};
 }

@@ -23,8 +23,9 @@ namespace cpplog::logger::decorator {
 		 * @brief Constructor
 		 *
 		 * @param[in] message The message to be decorated
+		 * @param[in] useSeparator Flag indicating whether separator shall be used
 		 */
-        explicit TimeStamp(std::unique_ptr<Message> message) noexcept;
+        explicit TimeStamp(std::unique_ptr<Message> message, bool useSeparator) noexcept;
 
 		/**
 		 * @brief Get the decorated message as a string

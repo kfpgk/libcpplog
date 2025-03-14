@@ -31,7 +31,7 @@ namespace cpplog::logger::decorator::unit_test {
 		std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 		std::unique_ptr<Message> timeStampedMessage
-			= std::make_unique<TimeStamp>(std::move(message));
+			= std::make_unique<TimeStamp>(std::move(message), true);
 
 		std::regex expected(
 			std::string(expectedFormat) + 

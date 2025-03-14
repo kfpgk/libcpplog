@@ -35,9 +35,8 @@ void test_without_class_or_namespace() {
 	std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 	std::unique_ptr<Message> messageWithLongContext
-		= std::make_unique<context::Long>(std::move(message), std::source_location::current());
+		= std::make_unique<context::Long>(std::move(message), std::source_location::current(), true);
 
-	using namespace cpplog::logger::decorator;
 	std::regex expected(
 		"Long\\.test\\.cpp:void( __cdecl | )" \
 		"test_without_class_or_namespace" \
@@ -62,7 +61,7 @@ namespace cpplog::logger::decorator::context::unit_test {
 		std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 		std::unique_ptr<Message> messageWithLongContext
-			= std::make_unique<Long>(std::move(message), std::source_location::current());
+			= std::make_unique<Long>(std::move(message), std::source_location::current(), true);
 
 		std::regex expected(
 			"Long\\.test\\.cpp:void( __cdecl | )" \

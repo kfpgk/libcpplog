@@ -42,7 +42,7 @@ void test_without_class_or_namespace() {
 	std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 	std::unique_ptr<Message> messageWithShortContext
-		= std::make_unique<context::Short>(std::move(message), std::source_location::current());
+		= std::make_unique<context::Short>(std::move(message), std::source_location::current(), true);
 
 	std::regex expected(
 		"Short\\.test\\.cpp:test_without_class_or_namespace" +
@@ -65,7 +65,7 @@ void const_test_without_class_or_namespace() {
 	std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 	std::unique_ptr<Message> messageWithShortContext
-		= std::make_unique<context::Short>(std::move(message), std::source_location::current());
+		= std::make_unique<context::Short>(std::move(message), std::source_location::current(), true);
 
 	std::regex expected(
 		"Short\\.test\\.cpp:const_test_without_class_or_namespace" +
@@ -88,7 +88,7 @@ namespace cpplog::logger::decorator::context::unit_test {
 		std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 		std::unique_ptr<Message> messageWithShortContext
-			= std::make_unique<Short>(std::move(message), std::source_location::current());
+			= std::make_unique<Short>(std::move(message), std::source_location::current(), true);
 
 		std::regex expected(
 			"Short\\.test\\.cpp:testGetStringConst" +
@@ -110,7 +110,7 @@ namespace cpplog::logger::decorator::context::unit_test {
 		std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 		std::unique_ptr<Message> messageWithShortContext
-			= std::make_unique<Short>(std::move(message), std::source_location::current());
+			= std::make_unique<Short>(std::move(message), std::source_location::current(), true);
 
 		std::regex expected(
 			"Short\\.test\\.cpp:testGetStringNonConst" +
@@ -131,7 +131,7 @@ namespace cpplog::logger::decorator::context::unit_test {
 		std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 		std::unique_ptr<Message> messageWithShortContext
-			= std::make_unique<Short>(std::move(message), std::source_location::current());
+			= std::make_unique<Short>(std::move(message), std::source_location::current(), true);
 
 		std::regex expected(
 			"Short\\.test\\.cpp:testGetStringWithConstInNameconst" +
@@ -152,7 +152,7 @@ namespace cpplog::logger::decorator::context::unit_test {
 		std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 		std::unique_ptr<Message> messageWithShortContext
-			= std::make_unique<Short>(std::move(message), std::source_location::current());
+			= std::make_unique<Short>(std::move(message), std::source_location::current(), true);
 
 		std::regex expected(
 			"Short\\.test\\.cpp:constTestGetStringWithConstInName" +
@@ -173,7 +173,7 @@ namespace cpplog::logger::decorator::context::unit_test {
 		std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 		std::unique_ptr<Message> messageWithShortContext
-			= std::make_unique<Short>(std::move(message), std::source_location::current());
+			= std::make_unique<Short>(std::move(message), std::source_location::current(), true);
 
 		std::regex expected(
 			"Short\\.test\\.cpp:testGetStringNoexcept" +

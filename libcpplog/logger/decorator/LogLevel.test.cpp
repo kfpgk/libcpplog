@@ -32,7 +32,7 @@ namespace cpplog::logger::decorator::unit_test {
 		std::unique_ptr<Message> message = std::make_unique<Message>("Test message");
 
 		std::unique_ptr<Message> messageInclLogLevel
-			= std::make_unique<LogLevel>(std::move(message), logger::LogLevel::Info);
+			= std::make_unique<LogLevel>(std::move(message), logger::LogLevel::Info, true);
 
 		std::regex expected(
 			std::string(expectedFormat) +

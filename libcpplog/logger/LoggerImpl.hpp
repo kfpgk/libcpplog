@@ -5,7 +5,7 @@
 #include <libcpplog/logger/LogComponent.hpp>
 #include <libcpplog/logger/LogFormat.hpp>
 #include <libcpplog/logger/LogLevel.hpp>
-#include <libcpplog/logger/LogStream.hpp>
+#include <libcpplog/logger/LogRequest.hpp>
 
 #include <functional>
 #include <mutex>
@@ -128,6 +128,30 @@ namespace cpplog::logger {
             const std::source_location location);
 
         /**
+         * @brief Logs \p functionName to configured output stream
+         * using .
+         *
+         * @param[in] message The message preceeding the function name
+         * @param[in] functionName The function name to be logged
+         */
+        void log(
+            const std::string_view message,
+            const LogRequest::FunctionName& functionName) const;
+
+        /**
+         * @brief Logs \p functionName to configured output stream
+         * using .
+         *
+         * @param[in] logLevel The log level of the message
+         * @param[in] message The message preceeding the function name
+         * @param[in] functionName The function name to be logged
+         */
+        void log(
+            LogLevel logLevel,
+            const std::string_view message,
+            const LogRequest::FunctionName& functionName) const;
+
+        /**
          * @brief Insertion operator overload for `std::endl`
          *
          * `std::endl` is a templated function, hence
@@ -140,7 +164,7 @@ namespace cpplog::logger {
          *
          * Log the corresponding stream format
          */
-        Impl& operator<<(const LogStream& stream);
+        Impl& operator<<(const LogRequest& stream);
 
         /**
          * @brief Insertion operator overload for `LogLevel`
@@ -150,18 +174,25 @@ namespace cpplog::logger {
         Impl& operator<<(LogLevel level);
 
         /**
+         * @brief Insertion operator overload for `LogStream::Context`
+         *
+         * Log the current context
+         */
+        Impl& operator<<(const LogRequest::Context& context);
+
+        /**
          * @brief Insertion operator overload for `LogStream::TimeStamp`
          *
          * Log the current time stamp
          */
-        Impl& operator<<(const LogStream::TimeStamp& timeStamp);
+        Impl& operator<<(const LogRequest::TimeStamp& timeStamp);
 
         /**
-         * @brief Insertion operator overload for `source_location`
+         * @brief Insertion operator overload for `LogStream::FunctionName`
          *
-         * Log the corresponding location
+         * Log the current function name
          */
-        Impl& operator<<(const std::source_location& location);
+        Impl& operator<<(const LogRequest::FunctionName& functionName);
 
         /**
          * @brief Insertion operator
@@ -216,7 +247,8 @@ namespace cpplog::logger {
             LogLevel logLevel,
             const std::string_view message,
             const std::source_location& location,
-            LogFormat format) const;
+            LogFormat format,
+            bool useSeparator = true) const;
 
         /**
 		 * @brief Builds the key for a message that has been logged once

@@ -4,7 +4,7 @@ target_sources(libcpplog
         LogFormat.cpp
         Logger.cpp
         LoggerImpl.cpp
-        LogStream.cpp
+        LogRequest.cpp
 )
 
 add_subdirectory(decorator)

@@ -9,14 +9,17 @@
 
 namespace cpplog::logger::decorator {
     
-    LogLevel::LogLevel(std::unique_ptr<Message> message, logger::LogLevel logLevel) noexcept :
-        Decorator{ std::move(message) },
-        logLevel{ logLevel } {
+    LogLevel::LogLevel(
+        std::unique_ptr<Message> message, 
+        logger::LogLevel logLevel, 
+        bool useSeparator) noexcept :
+            Decorator{ std::move(message), useSeparator },
+            logLevel{ logLevel } {
 
     }
 
     std::string LogLevel::getString() const {
-        return buildString() + getSeparator() + message->getString();
+        return buildString() + getSeparatorInternal() + message->getString();
     }
 
     /**

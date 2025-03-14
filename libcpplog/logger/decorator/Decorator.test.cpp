@@ -12,6 +12,8 @@ int main(int argc, char* argv[]) {
 
 	test.testSetAndGetSeparator();
 
+	test.testGetSeparatorInternal();
+
 	std::cout << "UT: logger::decorator::Decorator passed." << std::endl;
 	return 0;
 }
@@ -26,6 +28,18 @@ namespace cpplog::logger::decorator::unit_test {
 		Decorator::setSeparator(";");
 
 		assert(Decorator::getSeparator() == ";");
+	}
+
+	void DecoratorTest::testGetSeparatorInternal() const {
+		std::cout << std::source_location::current().file_name()
+			<< "(" << std::source_location::current().line() << ")"
+			<< ": Running testGetSeparatorInternal()" << std::endl;
+
+		Decorator::setSeparator(":");
+
+		Decorator decorator{ std::make_unique<Message>("Test"), false };
+
+		assert(decorator.getSeparatorInternal() == "");
 	}
 
 }

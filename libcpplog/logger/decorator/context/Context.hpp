@@ -16,6 +16,7 @@ namespace cpplog::logger::decorator::context {
 	 * @details
 	 * Patterns:
 	 *  - Decorator
+     *  - Template
 	 */
     class Context : public Decorator {
 
@@ -25,9 +26,11 @@ namespace cpplog::logger::decorator::context {
 		 *
 		 * @param[in] message The message to be decorated
 		 * @param[in] location The location of the message
+         * @param[in] useSeparator Flag indicating whether separator shall be used
 		 */
         Context(std::unique_ptr<Message> message, 
-            const std::source_location location) noexcept;
+            const std::source_location location,
+            bool useSeparator) noexcept;
 
         /**
          * @brief Get the decorated message as a string
@@ -36,11 +39,10 @@ namespace cpplog::logger::decorator::context {
          */
         std::string getString() const override;
 
-    protected:
+    private:
         ///> The location of the origin of the log message
         std::source_location location;
 
-    private:
 		/**
 		 * @brief Pure virtual method to retrieve the function name
          * 

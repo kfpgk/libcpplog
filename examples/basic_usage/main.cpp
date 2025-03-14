@@ -64,26 +64,33 @@ void useLogger() {
     // We can also log using the global `logger` object. This is the same as calling `log`
     logger.log("Using the global logger object");
 
+    // There is a convenient overload taking a LogRequest::functionName() as second argument.
+    // Suitable e.g. for logging during unit testing
+    logger.log("Running ", LogRequest::functionName());
+
     // Log via stream insertion operator. This is unformatted.
     logger << "Plain streamed log message" << std::endl;
 
-    // Log using the currently configured format using the LogStream object and stream insertion operator.
-    logger << LogStream(LogLevel::Error) 
+    // Log using the currently configured format using the LogRequest object and stream insertion operator.
+    logger << LogRequest(LogLevel::Error) 
            << "This is a rich error log via stream operator" << std::endl;
 
     // Log only log level and message via stream insertion operator.
     logger << LogLevel::Warning << "This is a streamed warning " << myF << std::endl;
 
-    // You can also do this via the LogStream object in a way that is consistent with timestamp and context.
-    logger << LogStream::logLevel(LogLevel::Warning) << "This will do the same" << std::endl;
+    // You can also do this via the LogRequest object in a way that is consistent with timestamp and context.
+    logger << LogRequest::logLevel(LogLevel::Warning) << "This will do the same" << std::endl;
 
     // Log only time stamp and message via stream insertion operator.
-    logger << LogStream::timeStamp() 
+    logger << LogRequest::timeStamp() 
            << "My time stamped streamed log message. Result: " 
            << myF << std::endl;
 
     // Log only context and message via stream insertion operator.
-    logger << LogStream::context() << "This is a streamed warning including context " << std::endl;
+    logger << LogRequest::context() << "This is a streamed warning including context " << std::endl;
+
+	// Log function name via stream insertion operator. Need to specify if we do not want a separator.
+    logger << "Running " << LogRequest::functionName(Separator::none) << std::endl;
 
     // Log message only once.
     for (int i = 0; i < 10; i++) {
@@ -105,6 +112,6 @@ void useLogger() {
     // Log to file in append mode
     std::ofstream logFile("logFile.txt", std::ios_base::app);
     myLogger.setOutput(logFile);
-    myLogger << LogStream() << "Log to test file" << std::endl;
+    myLogger << LogRequest() << "Log to test file" << std::endl;
 
 }

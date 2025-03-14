@@ -7,6 +7,7 @@ target_sources(libcpplog
 )
 
 add_subdirectory(context)
+add_subdirectory(function_name)
 
 if(BUILD_UNIT_TESTS)
     enable_testing()

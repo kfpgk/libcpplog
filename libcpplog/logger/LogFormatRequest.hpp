@@ -1,5 +1,5 @@
-#ifndef LIBCPPLOG_LOGGER_LOG_STREAM_HPP
-#define LIBCPPLOG_LOGGER_LOG_STREAM_HPP
+#ifndef LIBCPPLOG_LOGGER_LOG_REQUEST_HPP
+#define LIBCPPLOG_LOGGER_LOG_REQUEST_HPP
 
 #include <libcpplog/logger/LogLevel.hpp>
 
@@ -8,17 +8,21 @@
 namespace cpplog::logger {
 
     /**
-     * @brief Log stream class that provides formatted streams
+     * @brief Log request class that can be passed to the logger
      * 
      * Use this class when you want to add log meta data when
      * streaming via the stream insertion operator.
-     * Streaming an instance of `LogStream()` will log the 
+     * Streaming an instance of `LogRequest()` will log the 
      * currently configured LogFormat.
      * 
      * Log component can also be streamed independently using the
-     * static methods `logLevel()`, `context()` & `timeStamp()`.
+     * static methods `logLevel()`, `context()`, `timeStamp()` &
+	 * `functionName()`.
+     * 
+     * This object can also be used to log specific meta data such
+     * as a function name.
      */
-    class LogStream {
+    class LogRequest {
 
     public:
         /**
@@ -28,7 +32,7 @@ namespace cpplog::logger {
          * @param[in] location Location of the context that
          * shall be logged. Do not pass and use default.
          */
-        LogStream(
+        LogRequest(
             LogLevel logLevel = log_level::defaultValue,
             const std::source_location location = std::source_location::current()) noexcept;
 
@@ -50,12 +54,33 @@ namespace cpplog::logger {
         static LogLevel logLevel(LogLevel logLevel = log_level::defaultValue) noexcept;
 
         /**
+         * @brief Object to transport a function name request to the
+         * logger.
+         */
+        class Context {
+        public:
+            /**
+             * @brief Constructor
+             *
+             * @param[in] location The location containing the context
+             */
+            Context(const std::source_location& location) noexcept;
+
+            /**
+             * @brief Extracts the location
+             */
+            std::source_location getLocation() const noexcept;
+        private:
+            std::source_location location; ///< The location containing the context
+        };
+
+        /**
          * @brief Returns a context for streaming
          * 
          * @param[in] location Location of the context that
          * shall be logged. Do not pass and use default.
          */
-        static std::source_location context(
+        static Context context(
             const std::source_location& location = std::source_location::current()) noexcept;
 
         /**
@@ -68,6 +93,33 @@ namespace cpplog::logger {
          * @brief Returns a time stamp request for streaming
          */
         static TimeStamp timeStamp() noexcept;
+
+        /**
+         * @brief Object to transport a function name request to the
+         * logger.
+         */
+        class FunctionName {
+        public:
+			/**
+			 * @brief Constructor
+			 *
+			 * @param[in] location The location containing the function
+			 */
+            FunctionName(const std::source_location& location) noexcept;
+
+			/**
+			 * @brief Extracts the location
+			 */
+            std::source_location getLocation() const noexcept;
+		private:
+			std::source_location location; ///< The location containing the function
+        };
+
+        /**
+         * @brief Returns a function name request for streaming
+         */
+        static FunctionName functionName(
+            const std::source_location& location = std::source_location::current()) noexcept;
 
     private:
         ///< source location

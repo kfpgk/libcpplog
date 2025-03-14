@@ -18,6 +18,11 @@ namespace cpplog::logger::decorator::unit_test {
 		 * @brief Test the static `setSeparator()` and `getSeparator()` methods 
 		 */
 		void testSetAndGetSeparator() const;
+
+		/**
+		 * @brief Test the getSeparatorInternal() method
+		 */
+		void testGetSeparatorInternal() const;
 	};
 
 }

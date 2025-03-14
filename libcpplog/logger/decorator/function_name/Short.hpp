@@ -1,25 +1,25 @@
-#ifndef LIBCPPLOG_LOGGER_DECORATOR_CONTEXT_SHORT_HPP
-#define LIBCPPLOG_LOGGER_DECORATOR_CONTEXT_SHORT_HPP
+#ifndef LIBCPPLOG_LOGGER_DECORATOR_FUNCTION_NAME_SHORT_HPP
+#define LIBCPPLOG_LOGGER_DECORATOR_FUNCTION_NAME_SHORT_HPP
 
-#include <libcpplog/logger/decorator/context/Context.hpp>
-#include <libcpplog/logger/decorator/Message.hpp>
+#include <libcpplog/logger/decorator/function_name/FunctionName.hpp>
 #include <libcpplog/logger/decorator/function_name/ShortStore.hpp>
+#include <libcpplog/logger/decorator/Message.hpp>
 
 #include <memory>
 #include <source_location>
 #include <string>
 
-namespace cpplog::logger::decorator::context {
+namespace cpplog::logger::decorator::function_name {
 
     /**
-     * @brief Decorator for log messages that adds a short context
+     * @brief Decorator for log messages that adds a short function_name
      *
      * @details
      * Patterns:
      *  - Decorator
      *  - Template
      */
-    class Short : public Context {
+    class Short : public FunctionName {
 
     public:
         /**

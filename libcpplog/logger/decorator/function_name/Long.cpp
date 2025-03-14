@@ -1,18 +1,18 @@
-#include <libcpplog/logger/decorator/context/Long.hpp>
-#include <libcpplog/logger/decorator/Message.hpp>
+#include <libcpplog/logger/decorator/function_name/Long.hpp>
 #include <libcpplog/logger/decorator/function_name/LongStore.hpp>
+#include <libcpplog/logger/decorator/Message.hpp>
 
 #include <memory>
 #include <source_location>
 #include <string>
 
-namespace cpplog::logger::decorator::context {
+namespace cpplog::logger::decorator::function_name {
 
     Long::Long(
-        std::unique_ptr<Message> message, 
+        std::unique_ptr<Message> message,
         const std::source_location location,
         bool useSeparator) noexcept :
-            Context{ std::move(message), location, useSeparator },
+            FunctionName{ std::move(message), useSeparator },
             functionNameStore{ location } {
 
     }

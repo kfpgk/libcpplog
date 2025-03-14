@@ -1,6 +1,6 @@
 #include <libcpplog/logger/Logger.test.hpp>
 #include <libcpplog/logger/Logger.hpp>
-#include <libcpplog/logger/LogStream.hpp>
+#include <libcpplog/logger/LogRequest.hpp>
 #include <libcpplog/logger/decorator/context/Context.test.hpp>
 #include <libcpplog/logger/decorator/Decorator.test.hpp>
 #include <libcpplog/logger/decorator/LogLevel.test.hpp>
@@ -35,6 +35,9 @@ int main(int argc, char* argv[]) {
     test.testLogWithLogLevelContextLogLevel();
     test.testLogWithLogLevelContextLong();
 
+    test.testLogFunctionName();
+    test.testLogFunctionNameWithSeparator();
+
 	test.testStreamString();
     test.testStreamInt();
     test.testStreamFloat();
@@ -46,6 +49,7 @@ int main(int argc, char* argv[]) {
     test.testStreamLogLevel();
     test.testStreamTimeStamp();
     test.testStreamContext();
+    test.testStreamFunctionName();
     test.testStreamLogLevelTimeStampContext();
 
     test.testCopyConstructor();
@@ -304,6 +308,48 @@ namespace cpplog::logger::unit_test {
         assert(std::regex_match(logStream.str(), expected));
     }
 
+    void LoggerTest::testLogFunctionName() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogFunctionName()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(
+            logStream,
+            LogFormat{ });
+
+        logger.log("Running", LogRequest::functionName());
+
+        std::regex expected(
+            "Running testLogFunctionName\\(\\)\n",
+            std::regex_constants::ECMAScript);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+    void LoggerTest::testLogFunctionNameWithSeparator() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogFunctionNameWithSeparator()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(
+            logStream,
+            LogFormat{ });
+
+        logger.log("Running", LogRequest::functionName(Separator::use));
+
+        std::regex expected(
+            "Running testLogFunctionNameWithSeparator\\(\\) \\| \n",
+            std::regex_constants::ECMAScript);
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
     void LoggerTest::testStreamString() const {
         std::cout << std::source_location::current().file_name()
             << "(" << std::source_location::current().line() << ")"
@@ -403,7 +449,7 @@ namespace cpplog::logger::unit_test {
         std::stringstream logStream;
         Logger logger(logStream);
 
-        logger << LogStream::logLevel(LogLevel::Error);
+        logger << LogRequest::logLevel(LogLevel::Error);
 
         std::regex expected(exptected_format::logLevel + exptected_format::separator);
 
@@ -420,7 +466,7 @@ namespace cpplog::logger::unit_test {
         std::stringstream logStream;
         Logger logger(logStream);
 
-        logger << LogStream::timeStamp();
+        logger << LogRequest::timeStamp();
 
         std::regex expected(exptected_format::timeStamp + exptected_format::separator);
 
@@ -437,7 +483,7 @@ namespace cpplog::logger::unit_test {
         std::stringstream logStream;
         Logger logger(logStream);
 
-        logger << std::source_location::current();
+        logger << LogRequest::context();
 
         std::regex expected(
             "Logger\\.test\\.cpp:testStreamContext" +
@@ -448,6 +494,25 @@ namespace cpplog::logger::unit_test {
         assert(std::regex_match(logStream.str(), expected));
     }
 
+    void LoggerTest::testStreamFunctionName() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testStreamFunctionName()" << std::endl;
+
+        std::stringstream logStream;
+        Logger logger(logStream);
+
+        logger << LogRequest::functionName(Separator::none);
+
+        std::regex expected(
+            "testStreamFunctionName\\(\\)");
+
+        DEBUG("Actual: '" << logStream.str() << "'");
+
+        assert(std::regex_match(logStream.str(), expected));
+    }
+
+
     void LoggerTest::testStreamLogLevelTimeStampContext() const {
         std::cout << std::source_location::current().file_name()
             << "(" << std::source_location::current().line() << ")"
@@ -457,8 +522,8 @@ namespace cpplog::logger::unit_test {
         Logger logger(logStream);
 
         logger << LogLevel::Error 
-               << LogStream::timeStamp()
-               << LogStream::context()
+               << LogRequest::timeStamp()
+               << LogRequest::context()
                << "Rich error log message";
 
         std::regex expected(
@@ -481,7 +546,7 @@ namespace cpplog::logger::unit_test {
         std::stringstream logStream;
         Logger logger(logStream);
 
-        logger << LogStream(LogLevel::Error)
+        logger << LogRequest(LogLevel::Error)
                << "Rich error log message";
 
         std::regex expected(

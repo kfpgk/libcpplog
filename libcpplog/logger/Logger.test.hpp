@@ -97,6 +97,16 @@ namespace cpplog::logger::unit_test {
         void testLogWithLogLevelContextLong() const;
 
         /**
+         * @brief Test logging the function name
+         */
+        void testLogFunctionName() const;
+
+        /**
+         * @brief Test logging the function name with separator
+         */
+        void testLogFunctionNameWithSeparator() const;
+
+        /**
          * @brief Test logging strings via stream insertion 
          * operator 
          */
@@ -128,7 +138,7 @@ namespace cpplog::logger::unit_test {
 
         /**
          * @brief Test logging of log level via stream insertion
-         * operator via LogStream static method
+         * operator via LogRequest static method
          */
         void testStreamLogLevel() const;
 
@@ -145,6 +155,12 @@ namespace cpplog::logger::unit_test {
         void testStreamContext() const;
 
         /**
+         * @brief Test logging of function name via stream insertion
+         * operator
+         */
+        void testStreamFunctionName() const;
+
+        /**
          * @brief Test logging of a rich log message via
          * stream insertion operator
          */
@@ -152,7 +168,7 @@ namespace cpplog::logger::unit_test {
 
         /**
          * @brief Test logging of a rich log message via
-         * stream insertion operator and LogStream object
+         * stream insertion operator and LogRequest object
          */
         void testStreamLogStream() const;
 

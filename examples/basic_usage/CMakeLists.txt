@@ -16,5 +16,5 @@ target_link_libraries(basic_usage
 
 target_include_directories(basic_usage
     PRIVATE
-        "${LIBCPPLOG_INCLUDE_DIRS}"
+        "${LIBCPPLOG_INCLUDE_DIR}"
 )

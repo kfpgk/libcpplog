@@ -8,13 +8,13 @@
 
 namespace cpplog::logger::decorator {
     
-    TimeStamp::TimeStamp(std::unique_ptr<Message> message) noexcept :
-        Decorator{ std::move(message) } {
+    TimeStamp::TimeStamp(std::unique_ptr<Message> message, bool useSeparator) noexcept :
+        Decorator{ std::move(message), useSeparator } {
 
     }
 
     std::string TimeStamp::getString() const {
-        return buildString() + getSeparator() + message->getString();
+        return buildString() + getSeparatorInternal() + message->getString();
     }
 
     /**

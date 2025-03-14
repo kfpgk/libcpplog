@@ -9,9 +9,10 @@ namespace cpplog::logger::decorator {
 
     std::string Decorator::componentSeparator{ defaultSeparator };
 
-    Decorator::Decorator(std::unique_ptr<Message> message) noexcept :
+    Decorator::Decorator(std::unique_ptr<Message> message, bool useSeparator) noexcept :
         Message{ message->getString() },
-        message{ std::move(message) } {
+        message{ std::move(message) },
+        useSeparator{ useSeparator } {
 
     }
 
@@ -25,6 +26,10 @@ namespace cpplog::logger::decorator {
 
     std::string Decorator::getSeparator() noexcept {
         return componentSeparator;
+    }
+
+    std::string Decorator::getSeparatorInternal() const noexcept {
+        return useSeparator ? componentSeparator : "";
     }
 
 }

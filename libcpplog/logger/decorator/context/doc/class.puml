@@ -6,10 +6,9 @@ class Context {
     == public ==
     + Context(Message*)
     ..
-    + getString() : string
-    == protected ==
-    # location : source_location
+    + getString() : string    
     == private ==
+    - location : source_location
     - {abstract} getFunctionName() : string
     - buildString() : string
 }
@@ -18,6 +17,7 @@ class Long {
     == public ==
     + Long(Message*)
     == private ==
+    - functionName : function_name::LongStore
     - getFunctionName() : string
 }
 
@@ -25,10 +25,23 @@ class Short {
     == public ==
     + Short(Message*)
     == private ==
+    - functionName : function_name::ShortStore
     - getFunctionName() : string
+}
+
+package function_name {
+    class "ShortStore" as fn_ShortStore
+    hide fn_ShortStore methods
+    hide fn_ShortStore attributes  
+    class "LongStore" as fn_LongStore
+    hide fn_LongStore methods
+    hide fn_LongStore attributes 
 }
 
 Context <|-- Long
 Context <|-- Short
+
+Long o-- "1" fn_LongStore
+Short o-- "1" fn_ShortStore
 
 @enduml

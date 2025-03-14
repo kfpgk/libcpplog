@@ -13,6 +13,8 @@ namespace cpplog::logger {
         LogLevel, ///< Logging level 
         Context, ///< Context including file, short function name and line
         ContextLong, ///< Context including file, long function name and line.
+        Function, ///< Short function name
+        FunctionLong, ///< Long function name
         TimeStamp ///< Time stamp 
     };
 

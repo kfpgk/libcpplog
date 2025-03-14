@@ -25,8 +25,12 @@ namespace cpplog::logger::decorator {
          *
          * @param[in] message The message to be decorated
 		 * @param[in] logLevel The log level to be added
+         * @param[in] useSeparator Flag indicating whether separator shall be used
          */
-        LogLevel(std::unique_ptr<Message> message, logger::LogLevel logLevel) noexcept;
+        LogLevel(
+            std::unique_ptr<Message> message, 
+            logger::LogLevel logLevel, 
+            bool useSeparator) noexcept;
 
         /**
          * @brief Get the decorated message as a string

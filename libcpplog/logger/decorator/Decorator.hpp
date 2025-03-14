@@ -9,6 +9,10 @@
 
 namespace cpplog::logger::decorator {
 
+    namespace unit_test {
+		class DecoratorTest;
+    }
+
     /**
      * @brief Decorator class for log messages
      *
@@ -27,8 +31,9 @@ namespace cpplog::logger::decorator {
          * @brief Constructor
          *
          * @param[in] message The message to be decorated
+         * @param[in] useSeparator Flag indicating whether separator shall be used
          */
-        Decorator(std::unique_ptr<Message> message) noexcept;
+        Decorator(std::unique_ptr<Message> message, bool useSeparator) noexcept;
 
         /**
          * @brief Destructor
@@ -52,17 +57,28 @@ namespace cpplog::logger::decorator {
         /**
          * @brief Get the separator for components in the decorated message
          *
-		 * @return The separator
+         * @return The separator
          */
         static std::string getSeparator() noexcept;
 
     protected:
 		std::unique_ptr<Message> message; ///< Owning pointer to the message that is being decorated
-        
+
+        /**
+         * @brief Get the separator for components in the decorated message
+         *
+         * @return The separator
+         */
+        std::string getSeparatorInternal() const noexcept;
+
     private:
         ///< The default separator for components in the decorated message
         static constexpr std::string_view defaultSeparator{ " | " };
         static std::string componentSeparator; ///< The separator for components in the decorated message
+
+        bool useSeparator; ///< Flag indicating whether separator shall be used
+
+		friend class unit_test::DecoratorTest;
 
     };
 

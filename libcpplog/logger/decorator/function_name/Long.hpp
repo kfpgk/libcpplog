@@ -1,25 +1,25 @@
-#ifndef LIBCPPLOG_LOGGER_DECORATOR_CONTEXT_LONG_HPP
-#define LIBCPPLOG_LOGGER_DECORATOR_CONTEXT_LONG_HPP
+#ifndef LIBCPPLOG_LOGGER_DECORATOR_FUNCTION_NAME_LONG_HPP
+#define LIBCPPLOG_LOGGER_DECORATOR_FUNCTION_NAME_LONG_HPP
 
-#include <libcpplog/logger/decorator/context/Context.hpp>
-#include <libcpplog/logger/decorator/Message.hpp>
+#include <libcpplog/logger/decorator/function_name/FunctionName.hpp>
 #include <libcpplog/logger/decorator/function_name/LongStore.hpp>
+#include <libcpplog/logger/decorator/Message.hpp>
 
 #include <memory>
 #include <source_location>
 #include <string>
 
-namespace cpplog::logger::decorator::context {
+namespace cpplog::logger::decorator::function_name {
 
 	/**
-	 * @brief Decorator for log messages that adds a long context
+	 * @brief Decorator for log messages that adds a long function name
 	 *
 	 * @details
 	 * Patterns:
 	 *  - Decorator
 	 *  - Template
 	 */
-    class Long : public Context {
+    class Long : public FunctionName {
 
     public:
 		/**
@@ -29,8 +29,8 @@ namespace cpplog::logger::decorator::context {
 		 * @param[in] location The location of the message
 		 * @param[in] useSeparator Flag indicating whether separator shall be used
 		 */
-		Long(std::unique_ptr<Message> message,
-			const std::source_location location,
+        Long(std::unique_ptr<Message> message,
+            const std::source_location location,
 			bool useSeparator) noexcept;
 
     private:

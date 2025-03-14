@@ -125,6 +125,10 @@ int main(int argc, char* argv[]) {
     // We can also log using the global `logger` object. This is the same as calling `log`
     logger.log("Using the global logger object");
 
+    // There is a convenient overload taking a LogRequest::functionName() as second argument.
+    // Suitable e.g. for logging during unit testing
+    logger.log("Running ", LogRequest::functionName());
+
     // Log via stream insertion operator. This is unformatted.
     logger << "Plain streamed log message" << std::endl;
 
@@ -145,6 +149,9 @@ int main(int argc, char* argv[]) {
 
     // Log only context and message via stream insertion operator.
     logger << LogStream::context() << "This is a streamed warning including context " << std::endl;
+
+	// Log function name via stream insertion operator. Need to specify if we do not want a separator.
+    logger << "Running " << LogRequest::functionName(Separator::none) << std::endl;
 
     // Log message only once.
     for (int i = 0; i < 10; i++) {
@@ -199,6 +206,11 @@ int main(int argc, char* argv[]) {
 
 ## Build
 
+Fetch the repository:
+```shell
+git clone https://github.com/kfpgk/libcpplog.git
+```
+
 ### Library
 
 Build the library:
@@ -206,8 +218,8 @@ Build the library:
 cd libcpplog
 mkdir -p build/release
 cd build/release
-cmake ../..
-cmake --build .
+cmake -DCMAKE_BUILD_TYPE=Release ../..
+cmake --build . --config Release
 ```
 
 ### Tests
@@ -237,8 +249,8 @@ Use the `CMAKE_BUILD_TYPE` option to enable debug build.
 cd libcpplog
 mkdir -p build/debug
 cd build/debug
-cmake -DCMAKE_BUILD_TYPE=DEBUG ../..
-cmake --build .
+cmake -DCMAKE_BUILD_TYPE=Debug ../..
+cmake --build . --config Debug
 ```
 
 ## Installation
@@ -266,7 +278,7 @@ Use `-DCMAKE_INSTALL_PREFIX` only if you do not want to install to the default l
 Set-Location -path libcpplog
 New-Item -name build\release -ItemType Directory -Force
 Set-Location build\release
-cmake ..\.. -DCMAKE_INSTALL_PREFIX=<absolute-path-to-installation-dir>
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=<absolute-path-to-installation-dir> ..\..
 cmake --build . --config Release
 ```
 Installation may require admin privileges depending on install location. If so use a <em>administrator</em> `powershell` or `cmd` for the install command.
@@ -284,7 +296,7 @@ Use `-DCMAKE_INSTALL_PREFIX` only if you do not want to install to the default l
 Set-Location -path libcpplog
 New-Item -name build\debug -ItemType Directory -Force
 Set-Location build\debug
-cmake ..\.. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=<absolute-path-to-installation-dir>
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=<absolute-path-to-installation-dir> ..\..
 cmake --build . --config Debug
 ```
 Installation may require admin privileges depending on install location. If so use a <em>administrator</em> `powershell` or `cmd` for the install command.

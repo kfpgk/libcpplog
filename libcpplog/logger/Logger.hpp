@@ -36,7 +36,7 @@ namespace cpplog::logger {
          * component will be at the beginning of the line.
          */
         Logger(
-            std::ostream& outStream = std::cout,
+            std::ostream& outStream = defaultOutput(),
             LogFormat format = LogFormat::defaultValue()) noexcept;
 
         /**
@@ -237,6 +237,11 @@ namespace cpplog::logger {
          */
         Logger& operator<<(const LogRequest::FunctionName& functionName);
     
+        /**
+		 * @brief Returns the default output stream
+         */
+        static std::ostream& defaultOutput() noexcept;
+
     private:
 		class Impl; ///< Pimpl idiom. Class forward declaration
 		std::unique_ptr<Impl> pImpl; ///< Pimpl idiom. Pointer to implementation

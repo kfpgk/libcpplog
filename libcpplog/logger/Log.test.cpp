@@ -15,7 +15,14 @@ int main(int argc, char* argv[]) {
 
     test.testPlainLog();
     test.testPlainLogOnce();
+
     test.testSetOutput();
+
+    test.testLogFunctionName();
+    test.testLogFunctionNameWithLogLevel();
+
+    test.testLogException();
+    test.testLogExceptionWithLogLevel();
 
     std::cout << "UT: logger::log passed." << std::endl;
     return 0;
@@ -78,6 +85,8 @@ namespace cpplog::logger::unit_test {
         logger.setOutput(secondLogStream);
         log("Test log 2");
 
+		logger.setOutput(Logger::defaultOutput());
+
         std::string expected1 = "Test log\n";
         std::string expected2 = "Test log 2\n";
 
@@ -89,6 +98,38 @@ namespace cpplog::logger::unit_test {
 
         assert(firstLogStream.str() == expected1);
         assert(secondLogStream.str() == expected2);
+    }
+
+    void LogTest::testLogFunctionName() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogFunctionName()" << std::endl;
+
+        log("Running ", LogRequest::functionName());
+    }
+
+    void LogTest::testLogFunctionNameWithLogLevel() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogFunctionNameWithLogLevel()" << std::endl;
+
+        log(LogLevel::Result, "Running ", LogRequest::functionName());
+    }
+
+    void LogTest::testLogException() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogException()" << std::endl;
+
+		log(std::runtime_error("Test exception"));
+    }
+
+    void LogTest::testLogExceptionWithLogLevel() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogExceptionWithLogLevel()" << std::endl;
+
+        log(LogLevel::Info, std::runtime_error("Test exception"));
     }
 
 }

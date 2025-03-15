@@ -20,6 +20,8 @@ int main(int argc, char* argv[]) {
 
     cpplog::logger::unit_test::LoggerTest test;
 
+    test.testLogToCout();
+
     test.testPlainLog();
     test.testPlainLogTwice();
 
@@ -72,6 +74,16 @@ namespace cpplog::logger::unit_test {
 		const std::string separator{ decorator::unit_test::DecoratorTest::escapedDefaultSeparator };
 		const std::string lineNo{ decorator::context::unit_test::ContextTest::expectedLineFormat };
 	}
+
+    void LoggerTest::testLogToCout() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running testLogToCout()" << std::endl;
+
+        Logger logger(std::cout);
+
+        logger.log("Test log");
+    }
 
     void LoggerTest::testPlainLog() const {
         std::cout << std::source_location::current().file_name()

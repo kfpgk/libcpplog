@@ -10,6 +10,12 @@ namespace cpplog::logger::unit_test {
 
     public:
         /**
+         * @brief Test the `log` function when
+         * called with output `std::cout`
+         */
+        void testLogToCout() const;
+
+        /**
          * @brief Test the `log` function
          *
          * Log a 'plain' message without

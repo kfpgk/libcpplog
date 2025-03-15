@@ -145,4 +145,8 @@ namespace cpplog::logger {
         return *this;
     }
 
+	std::ostream& Logger::defaultOutput() noexcept {
+		return std::cout;
+	}
+
 }

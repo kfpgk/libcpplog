@@ -39,6 +39,54 @@ namespace cpplog::logger::unit_test {
          * functions.
          */
         void testSetOutput() const;
+
+        /**
+         * @brief Test the `log` function with
+         * functionName argument.
+         * 
+         * This test case tests no functionality, since this
+		 * is part of the `Logger` class and included in the
+         * respective unit test.
+		 * It only verifies that the call to the function
+         * is accepted. 
+         */
+        void testLogFunctionName() const;
+
+        /**
+         * @brief Test the `log` function with
+         * functionName and log level argument
+         * 
+         * This test case tests no functionality, since this
+         * is part of the `Logger` class and included in the
+         * respective unit test.
+         * It only verifies that the call to the function
+         * is accepted.
+         */
+        void testLogFunctionNameWithLogLevel() const;
+
+        /**
+         * @brief Test the `log` function with 
+         * exception argument
+         * 
+         * This test case tests no functionality, since this
+         * is part of the `Logger` class and included in the
+         * respective unit test.
+         * It only verifies that the call to the function
+         * is accepted.
+         */
+        void testLogException() const;
+
+        /**
+         * @brief Test the `log` function with
+         * exception and log level argument
+         * 
+         * This test case tests no functionality, since this
+         * is part of the `Logger` class and included in the
+         * respective unit test.
+         * It only verifies that the call to the function
+         * is accepted.
+         */
+        void testLogExceptionWithLogLevel() const;
     };
 
 }

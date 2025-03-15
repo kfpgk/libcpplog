@@ -95,10 +95,12 @@ class LogFormat {
 package Logger as LoggerPackage {
     class Logger {
         == public ==
+        + Logger(LogFormat)
         + Logger(ostream&, LogFormat)
         ..
         + setOutput(ostream&) : void
         + setFormat(LogFormat) : void
+        + {static} defaultOutput() : ostream&
         ..
         + log(string) : void
         + log(LogLevel, string) : void
@@ -106,6 +108,8 @@ package Logger as LoggerPackage {
         + logOnce(LogLevel, string) : void
         + log(string, LogRequest::FunctionName) : void
         + log(LogLevel, string, LogRequest::FunctionName) : void
+        + log(exception&) : void
+        + log(LogLevel, exception&) : void
         ..
         + operator<<(string) : Logger&
         + operator<<(float) : Logger&
@@ -131,6 +135,8 @@ package Logger as LoggerPackage {
         + logOnce(LogLevel, string) : void
         + log(string, LogRequest::FunctionName) : void
         + log(LogLevel, string, LogRequest::FunctionName) : void
+        + log(exception&) : void
+        + log(LogLevel, exception&) : void
         ..
         + operator<< <T>(T) : Logger::Impl&
         + operator<<(LogRequest) : Logger::Impl&
@@ -160,6 +166,10 @@ class "<<globals>>" as globals << (G,#FF77FF) >> {
     log(LogLevel, string) : void
     logOnce(string) : void
     logOnce(LogLevel, string) : void
+    log(string, LogRequest::FunctionName) : void
+    log(LogLevel, string, LogRequest::FunctionName) : void
+    log(exception&) : void
+    log(LogLevel, exception&) : void
 }
 
 LogRequestPackage -- Separator

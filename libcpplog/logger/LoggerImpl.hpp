@@ -180,7 +180,7 @@ namespace cpplog::logger {
          * @brief Logs \p exception to configured output stream
          *
          * @param[in] logLevel The log level of the message
-		 * qparam[in] indent The indentation level of the message
+		 * @param[in] indent The indentation level of the message
          * @param[in] exception The exception including nested
          * exceptions to be logged
          * @param[in] location Gets filled automatically via

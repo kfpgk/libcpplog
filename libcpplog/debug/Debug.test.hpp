@@ -3,11 +3,23 @@
 
 namespace cpplog::debug::unit_test {
 
+    /**
+	 * @brief Unit test for the DEBUG macros
+	 */
     class DebugTest {
 
-        public:
-            void incrementIndent();
-            void decrementIndent();
+    public:
+        /**
+         * @brief Test indentation behavior
+         * when `DEBUG_ENTER()` gets called
+         */
+        void incrementIndent();
+
+        /**
+         * @brief Test indentation behavior
+         * when `DEBUG_EXIT()` gets called
+         */
+        void decrementIndent();
 
     };
 

@@ -1,8 +1,9 @@
-
+<a id="libcpplog"></a>
 # libcpplog
 
 A C++ logging library.
 
+<a id="table-of-contents"></a>
 ## Table of Contents
 
 - [libcpplog](#libcpplog)
@@ -27,10 +28,12 @@ A C++ logging library.
   - [Credits](#credits)
   - [License](#license)
 
+<a id="introduction"></a>
 ## Introduction
 
 This repository holds the source code, documentation and tests for the `C++` logging library `libcpplog`.
 
+<a id="features"></a>
 ## Features
 
 - Simple and flexible logging interface
@@ -39,10 +42,12 @@ This repository holds the source code, documentation and tests for the `C++` log
 - Stream-based logging
 - No runtime overhead for debug output in release builds
 
+<a id="usage"></a>
 ## Usage
 
 The library consists of a `logger` package and a `debug` package.
 
+<a id="headers"></a>
 ### Headers
 
 The library provides the following headers.
@@ -64,6 +69,7 @@ The library provides the following headers.
 #include <libcpplog/debug/Debug.hpp>
 ```
 
+<a id="logging"></a>
 ### Logging
 
 The library provides a global `logger` object of type `Logger` in namespace `cpplog::logger`.
@@ -188,6 +194,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
+<a id="debug"></a>
 ### Debug
 
 Debug outputs are implemented using macros that result in no runtime overhead for release builds.
@@ -207,10 +214,12 @@ int main(int argc, char* argv[]) {
 }
 ```
 
+<a id="dependencies"></a>
 ## Dependencies
 
 - <em>C++23</em>.
 
+<a id="build"></a>
 ## Build
 
 Fetch the repository:
@@ -218,6 +227,7 @@ Fetch the repository:
 git clone https://github.com/kfpgk/libcpplog.git
 ```
 
+<a id="library"></a>
 ### Library
 
 Build the library:
@@ -229,6 +239,7 @@ cmake -DCMAKE_BUILD_TYPE=Release ../..
 cmake --build . --config Release
 ```
 
+<a id="tests"></a>
 ### Tests
 
 Set the `BUILD_UNIT_TESTS` option to build unit tests.
@@ -248,6 +259,7 @@ make test
 
 Unit test names are preceded by `UT` in the result view.
 
+<a id="debug-build"></a>
 ### Debug build
 
 Use the `CMAKE_BUILD_TYPE` option to enable debug build.
@@ -260,6 +272,7 @@ cmake -DCMAKE_BUILD_TYPE=Debug ../..
 cmake --build . --config Debug
 ```
 
+<a id="installation"></a>
 ## Installation
 
 To install the library, follow these steps:
@@ -267,6 +280,7 @@ To install the library, follow these steps:
 Building a static library is the default.
 For building shared libraries use the <em>cmake</em> option `BUILD_SHARED_LIBS`. Examples see below.
 
+<a id="windows"></a>
 ### Windows
 
 <b>MSVC</b> requires dependencies to be the same type of build as the actual target executable. 
@@ -277,6 +291,7 @@ This way we can install both versions of the library next to each other. The rec
 can link to whichever build it needs.
 
 <a id="windows-static-release-install"></a>
+<a id="static-release-version"></a>
 #### Static release version
 Install instructions for the static release version using `powershell`.
 Use `-DCMAKE_INSTALL_PREFIX` only if you do not want to install to the default location.
@@ -293,8 +308,8 @@ Installation may require admin privileges depending on install location. If so u
 ```powershell
 cmake --build . --target install --config Release
 ```
-
 <a id="windows-static-debug-install"></a>
+<a id="static-debug-version"></a>
 #### Static debug version
 Install instructions for the static debug version using `powershell`.
 Use `-DCMAKE_INSTALL_PREFIX` only if you do not want to install to the default location.
@@ -347,6 +362,7 @@ cmake --build . --target install --config Debug
 +- CMakeLists.txt
 </pre>
 
+<a id="contribute"></a>
 ## Contribute
 
 Check the following things when contributing to this library:
@@ -356,12 +372,13 @@ Check the following things when contributing to this library:
 - [ ] Unit tests run successfully?
 - [ ] Is the public API of the library affected by the change?
 
+<a id="credits"></a>
 ## Credits
 
-Credits to <em>Marius Bancila</em>. The default log format is based on his blog post 
+Credits to <em>Marius Bancila</em>. The default log format is based in his blog post 
 [Writing a simple logging function in C++20](https://mariusbancila.ro/blog/2021/07/03/writing-a-simple-logging-function-in-c20/).
 
-
+<a id="license"></a>
 ## License
 
 This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](LICENSE) file for details.

@@ -115,6 +115,7 @@ namespace cpplog::logger {
         /**
          * @brief Returns a context for streaming
          * 
+         * @param[in] sep Defines whether a separator shall be used
          * @param[in] location Location of the context that
          * shall be logged. Do not pass and use default.
          */

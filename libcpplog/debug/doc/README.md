@@ -1,3 +1,1 @@
-![Debug Class Diagram](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://github.com/kfpgk/libcpplog/blob/initial/libcpplog/debug/doc/class.puml)
-
-http://www.plantuml.com/plantuml/proxy?cache=no&src=https://github.com/kfpgk/libcpplog/blob/initial/libcpplog/debug/doc/class.puml
+![Debug Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/kfpgk/libcpplog/refs/heads/initial/libcpplog/debug/doc/class.puml)

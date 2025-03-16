@@ -242,16 +242,16 @@ namespace cpplog::logger {
         Impl& operator<<(const T& data);
     
     private:
-        ///< The stream onto which all logs get written to
+        /// @brief The stream onto which all logs get written to
 		std::reference_wrapper<std::ostream> outStream;
         
-		///< The format of the log message
+		/// @brief The format of the log message
         LogFormat format;
 
-        ///< Log level if used does not specify log level
+        /// @brief Log level if used does not specify log level
         LogLevel defaultLogLevel = log_level::defaultValue;
 
-		///< The set of messages that have been logged once
+		/// @brief The set of messages that have been logged once
         std::unordered_set<std::string> loggedOnceMessages;
 
 		mutable std::mutex mutexForLoggedMsg; ///< Mutex for the set of logged once messages

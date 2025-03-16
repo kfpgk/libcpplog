@@ -11,7 +11,7 @@ namespace cpplog::logger::decorator::unit_test {
 	class LogLevelTest {
 
 	public:
-		///< The expected log level format including escape characters for use in regular expressions
+		/// @brief The expected log level format including escape characters for use in regular expressions
 		static constexpr std::string_view expectedFormat{
 			"\\[[A-Z]\\]" };
 

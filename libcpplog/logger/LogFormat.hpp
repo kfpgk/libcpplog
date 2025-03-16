@@ -49,7 +49,7 @@ namespace cpplog::logger {
         static LogFormat defaultValue() noexcept;
 
     private:
-        ///< data container to hold the log components. Order is important.
+        /// @brief data container to hold the log components. Order is important.
         std::vector<LogComponent> components; 
 
     };

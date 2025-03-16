@@ -173,11 +173,8 @@ namespace cpplog::logger {
             const std::source_location& location = std::source_location::current()) noexcept;
 
     private:
-        ///< source location
-        std::source_location location;
-
-        ///< log level
-        LogLevel logLevelAttribute;
+        std::source_location location; ///< source location
+        LogLevel logLevelAttribute; ///< log level
 
     };
 

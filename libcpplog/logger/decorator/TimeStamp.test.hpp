@@ -11,7 +11,7 @@ namespace cpplog::logger::decorator::unit_test {
 	class TimeStampTest {
 
 	public:
-		///< The expected time stamp format including escape characters for use in regular expressions
+		/// @brief The expected time stamp format including escape characters for use in regular expressions
 		static constexpr std::string_view expectedFormat {
 			"[0-9]{4}-[0-9]{2}-[0-9]{2}[0-9|:|\\.| ]* [A-Z]{3}[+|-][0-9]*" };
 

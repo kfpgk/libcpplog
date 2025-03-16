@@ -72,7 +72,7 @@ namespace cpplog::logger::decorator {
         std::string getSeparatorInternal() const noexcept;
 
     private:
-        ///< The default separator for components in the decorated message
+        /// @brief The default separator for components in the decorated message
         static constexpr std::string_view defaultSeparator{ " | " };
         static std::string componentSeparator; ///< The separator for components in the decorated message
 

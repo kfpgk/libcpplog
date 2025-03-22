@@ -63,7 +63,7 @@ The library provides the following headers.
 #include <libcpplog/logger/LogComponent.hpp>
 #include <libcpplog/logger/LogFormat.hpp>
 #include <libcpplog/logger/LogLevel.hpp>
-#include <libcpplog/logger/LogStream.hpp>
+#include <libcpplog/logger/LogRequest.hpp>
 
 // Header for debug macros
 #include <libcpplog/debug/Debug.hpp>
@@ -83,7 +83,7 @@ The log output can be configured via `logger.setOutput(std::ostream&)`.
 
 > Important: Make sure the `ostream` that has been passed to the `Logger` (either via constructor or via `setOutput()`) does not go out of scope while the logger is using it. This would result in <b>undefined behavior</b>.
 
-As an alternative to logging via `log()`, one can stream into the `logger` object using the stream insertion operator `<<`. When logging like this, use `LogStream()` to stream the currently configured log format, otherwise streaming will result in a raw log message without meta data.
+As an alternative to logging via `log()`, one can stream into the `logger` object using the stream insertion operator `<<`. When logging like this, use `LogRequest()` to stream the currently configured log format, otherwise streaming will result in a raw log message without meta data.
 
 The default log format is equivalent to the one presented by <em>Marius Bancila</em> on his blog post 
 [Writing a simple logging function in C++20](https://mariusbancila.ro/blog/2021/07/03/writing-a-simple-logging-function-in-c20/) and looks like this (example):
@@ -145,23 +145,23 @@ int main(int argc, char* argv[]) {
     // Log via stream insertion operator. This is unformatted.
     logger << "Plain streamed log message" << std::endl;
 
-    // Log using the currently configured format using the LogStream object and stream insertion operator.
-    logger << LogStream(LogLevel::Error) 
+    // Log using the currently configured format using the LogRequest object and stream insertion operator.
+    logger << LogRequest(LogLevel::Error) 
            << "This is a rich error log via stream operator" << std::endl;
 
     // Log only log level and message via stream insertion operator.
     logger << LogLevel::Warning << "This is a streamed warning " << myF << std::endl;
 
-    // You can also do this via the LogStream object in a way that is consistent with timestamp and context.
-    logger << LogStream::logLevel(LogLevel::Warning) << "This will do the same" << std::endl;
+    // You can also do this via the LogRequest object in a way that is consistent with timestamp and context.
+    logger << LogRequest::logLevel(LogLevel::Warning) << "This will do the same" << std::endl;
 
     // Log only time stamp and message via stream insertion operator.
-    logger << LogStream::timeStamp() 
+    logger << LogRequest::timeStamp() 
            << "My time stamped streamed log message. Result: " 
            << myF << std::endl;
 
     // Log only context and message via stream insertion operator.
-    logger << LogStream::context() << "This is a streamed warning including context " << std::endl;
+    logger << LogRequest::context() << "This is a streamed warning including context " << std::endl;
 
 	// Log function name via stream insertion operator. Need to specify if we do not want a separator.
     logger << "Running " << LogRequest::functionName(Separator::none) << std::endl;
@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
     std::ofstream logFile("logFile.txt", std::ios_base::app);
     myLogger.setOutput(logFile);
 
-    myLogger << LogStream() << "Log to test file" << std::endl;
+    myLogger << LogRequest() << "Log to test file" << std::endl;
 
     return 0;
 

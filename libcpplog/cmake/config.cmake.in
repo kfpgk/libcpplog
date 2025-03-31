@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+
+check_required_components(libcpplog)
+
+include("${PACKAGE_PREFIX_DIR}/libcpplog/cmake/libcpplog-targets.cmake")

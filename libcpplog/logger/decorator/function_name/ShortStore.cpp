@@ -20,11 +20,11 @@ namespace cpplog::logger::decorator::function_name {
     }
 
     std::string& ShortStore::removeSpecifiersWithParentheses(std::string& functionName) const {
-		std::array<std::string_view, 4> specifiers{ 
+		std::array<const std::string_view, 2> specifiers{ 
             " noexcept(true)", 
             " noexcept(false)" 
         };
-		for (auto specifier : specifiers) {
+		for (auto&& specifier : specifiers) {
 			std::size_t pos = functionName.find(specifier);
 			if (pos != std::string::npos) {
 				functionName.erase(pos, specifier.size());

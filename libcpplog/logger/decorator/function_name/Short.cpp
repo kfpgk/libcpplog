@@ -18,7 +18,7 @@ namespace cpplog::logger::decorator::function_name {
     }
 
     std::string Short::getFunctionName() const {
-		return functionNameStore.extract() + "()";
+	    return functionNameStore.extract() + "()";
     }
 
 }

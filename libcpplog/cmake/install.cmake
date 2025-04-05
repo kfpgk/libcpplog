@@ -18,11 +18,11 @@ install(TARGETS libcpplog
     INCLUDES DESTINATION "${libcpplog_INSTALL_INCLUDEDIR}"
 )
 
-foreach(header ${PUBLIC_HEADERS})
-    get_filename_component(header_dir ${header} DIRECTORY)
+foreach(header_file ${PUBLIC_HEADERS})
+    get_filename_component(header_dir ${header_file} DIRECTORY)
     install(
         FILES 
-            ${file} 
+            ${header_file} 
         DESTINATION 
             "${libcpplog_INSTALL_INCLUDEDIR}/libcpplog/${header_dir}"
         COMPONENT

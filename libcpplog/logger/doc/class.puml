@@ -172,6 +172,12 @@ class "<<globals>>" as globals << (G,#FF77FF) >> {
     log(LogLevel, exception&) : void
 }
 
+package decorator {
+    class Decorator
+    hide Decorator attributes
+    hide Decorator methods
+}
+
 LogRequestPackage -- Separator
 LoggerPackage -- Separator
 
@@ -199,5 +205,7 @@ LogFormat -[hidden]down-> LogLevel
 LogLevel -[hidden]down-> LogComponent
 
 globals -left-> LoggerPackage
+
+LoggerImpl -> decorator
 
 @enduml

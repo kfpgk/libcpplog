@@ -20,14 +20,15 @@ package cpplog::logger {
     }
     hide LogComponent methods
 
-    class LogStream {
-        + LogStream()
-        + LogStream(LogLevel)
+    class LogRequest {
+        + LogRequest()
+        + LogRequest(LogLevel)
         ..
         + {static} logLevel() : LogLevel
-        + {static} logLevel() : LogLevel
-        + {static} context() : source_location
-        + {static} timeStamp() : LogStream::TimeStamp
+        + {static} logLevel(LogLevel) : LogLevel
+        + {static} context() : LogRequest::Context
+        + {static} timeStamp() : LogRequest::TimeStamp
+        + {static} functionName() : LogRequest::FunctionName
     }
 
     class LogFormat << (D,#0077AA) >> {
@@ -45,13 +46,18 @@ package cpplog::logger {
         + log(LogLevel, string) : void
         + logOnce(string) : void
         + logOnce(LogLevel, string) : void
+        + log(string, LogRequest::FunctionName) : void
+        + log(LogLevel, string, LogRequest::FunctionName) : void
+        + log(exception&) : void
+        + log(LogLevel, exception&) : void
         ..
         + operator<<(string) : Logger&
         + operator<<(float) : Logger&
-        + operator<<(LogStream) : Logger&
+        + operator<<(LogRequest) : Logger&
         + operator<<(enum LogLevel) : Logger&
-        + operator<<(LogStream::TimeStamp) : Logger&
-        + operator<<(source_location) : Logger&
+        + operator<<(LogRequest::Context) : Logger&
+        + operator<<(LogRequest::TimeStamp) : Logger&
+        + operator<<(LogRequest::FunctionName) : Logger&
     }
 
     class "<<globals>>" as globals << (G,#FF77FF) >> {
@@ -64,6 +70,10 @@ package cpplog::logger {
         log(LogLevel, string) : void
         logOnce(string) : void
         logOnce(LogLevel, string) : void
+        log(string, LogRequest::FunctionName) : void
+        log(LogLevel, string, LogRequest::FunctionName) : void
+        log(exception&) : void
+        log(LogLevel, exception&) : void
     }
 }
 

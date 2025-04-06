@@ -10,11 +10,11 @@ namespace cpplog::logger {
      */
     enum class LogLevel : char
     {
+        Debug = 'D',
         Error = 'E',
         Info = 'I',
         Result = 'R',
         Warning = 'W'
-        
     };
 
     namespace log_level {

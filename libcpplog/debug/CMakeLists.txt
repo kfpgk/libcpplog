@@ -1,8 +1,3 @@
-target_sources(libcpplog
-    PRIVATE
-        Debug.cpp
-)
-
 if(BUILD_UNIT_TESTS)
     enable_testing()
 
@@ -12,7 +7,6 @@ if(BUILD_UNIT_TESTS)
     target_include_directories(Debug_test 
         PRIVATE
             ${CMAKE_SOURCE_DIR}
-            ${CMAKE_BINARY_DIR}
     )
     target_link_libraries(Debug_test
         PRIVATE

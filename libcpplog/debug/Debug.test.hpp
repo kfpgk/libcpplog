@@ -10,16 +10,19 @@ namespace cpplog::debug::unit_test {
 
     public:
         /**
-         * @brief Test indentation behavior
-         * when `DEBUG_ENTER()` gets called
+		 * @brief Test plain debug output
          */
-        void incrementIndent();
+        void debugOut() const;
 
         /**
-         * @brief Test indentation behavior
-         * when `DEBUG_EXIT()` gets called
+         * @brief Test indentation behavior when `DEBUG_ENTER()` gets called
          */
-        void decrementIndent();
+        void incrementIndent() const;
+
+        /**
+         * @brief Test indentation behavior when `DEBUG_EXIT()` gets called
+         */
+        void decrementIndent() const;
 
     };
 

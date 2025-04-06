@@ -7,10 +7,14 @@
 #include <cassert>
 #include <cstddef>
 #include <iostream>
+#include <source_location>
+#include <sstream>
 
 int main(int argc, char* argv[]) {
 
     cpplog::debug::unit_test::DebugTest test;
+
+    test.debugOut();
 
     test.incrementIndent();
     test.decrementIndent();
@@ -21,8 +25,32 @@ int main(int argc, char* argv[]) {
 
 namespace cpplog::debug::unit_test {
 
-    void DebugTest::incrementIndent() {
-        std::cout << __FILE__ << "(" << __LINE__ << "): Running incrementIndent()" << std::endl;
+	void DebugTest::debugOut() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running debugOut()" << std::endl;
+        
+		std::stringstream logStream;
+        cpplog::debug::logger.setOutput(logStream);
+        cpplog::debug::logger.setFormat({ });
+
+        DEBUG("Debug output test");
+        
+        cpplog::debug::logger.setOutput(cpplog::logger::Logger::defaultOutput());
+		cpplog::debug::logger.setFormat(cpplog::logger::LogFormat::defaultValue());
+        
+        std::string expected = "Debug output test\n";
+
+        DEBUG("Expected: '" << expected << "'");
+        DEBUG("Actual: '" << logStream.str() << "'");
+        
+        assert(logStream.str() == expected);
+	}
+
+    void DebugTest::incrementIndent() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running incrementIndent()" << std::endl;
 
         std::size_t indent = cpplog::debug::debugIndent;
         DEBUG_ENTER();
@@ -32,8 +60,10 @@ namespace cpplog::debug::unit_test {
         DEBUG_EXIT();
     }
 
-    void DebugTest::decrementIndent() {
-        std::cout << __FILE__ << "(" << __LINE__ << "): Running incrementIndent()" << std::endl;
+    void DebugTest::decrementIndent() const {
+        std::cout << std::source_location::current().file_name()
+            << "(" << std::source_location::current().line() << ")"
+            << ": Running decrementIndent()" << std::endl;
 
         DEBUG_ENTER();
         std::size_t indent = cpplog::debug::debugIndent;

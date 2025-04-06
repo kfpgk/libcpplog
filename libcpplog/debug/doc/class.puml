@@ -2,7 +2,8 @@
 
 title libcpplog debug class diagram
 
-class Debug {
+class debug {
+    + logger : Logger
     - debugIndent : int
     + DEBUG(string) : void
     + DEBUG_ENTER() : void

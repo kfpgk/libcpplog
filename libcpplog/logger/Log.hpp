@@ -13,7 +13,7 @@
 
 namespace cpplog::logger {
 
-    inline Logger logger;
+    inline Logger logger; ///< global logger object
 
     /**
      * @brief Configure output stream

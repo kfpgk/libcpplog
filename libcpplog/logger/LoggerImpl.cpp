@@ -126,8 +126,7 @@ namespace cpplog::logger {
         log(logLevel, std::string(indent) + exception.what(), location);
         try {
             std::rethrow_if_nested(exception);
-        }
-        catch (const std::exception& e) {
+        } catch (const std::exception& e) {
             log(logLevel, std::string(indent) + "  ", e, location);
         }
     }

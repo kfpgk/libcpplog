@@ -30,3 +30,4 @@ endif()
 
 add_subdirectory(debug)
 add_subdirectory(logger)
+add_subdirectory(utils)

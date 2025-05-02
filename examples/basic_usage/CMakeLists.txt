@@ -2,19 +2,22 @@ add_executable(basic_usage
     main.cpp
 )
 
-find_package(LIBCPPLOG
+find_package(libcpplog
     NAMES
         cpplog
         libcpplog
     REQUIRED
 )
 
-target_link_libraries(basic_usage
-    PRIVATE
-        ${LIBCPPLOG}
-)
+get_target_property(libcpplog_INCLUDE_DIR CPPLOG::libcpplog INTERFACE_INCLUDE_DIRECTORIES)
 
 target_include_directories(basic_usage
     PRIVATE
-        "${LIBCPPLOG_INCLUDE_DIR}"
+        "${libcpplog_INCLUDE_DIR}"
 )
+
+target_link_libraries(basic_usage
+    PRIVATE
+        CPPLOG::libcpplog
+)
+

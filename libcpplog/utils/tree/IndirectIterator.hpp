@@ -25,6 +25,10 @@ namespace cpplog::utils::tree {
 
         /**
          * @brief Default constructor
+         * 
+         * @details
+         * `std` iterators are default constructible and we want to keep standard 
+         * semantics.
          */
 		IndirectIterator() = default;
 
@@ -37,9 +41,6 @@ namespace cpplog::utils::tree {
 
         /**
          * @brief Overload for dereference operator
-         * 
-         * @details
-		 * Dereference twice to dereference the unique pointer and get the value
          */
         reference operator*() const;
 

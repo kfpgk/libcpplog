@@ -14,10 +14,11 @@ int main(int argc, char* argv[]) {
 
 	test.testConstruction();
 
+	test.testEqualComparison();
+	test.testNotEqualComparison();
+
 	test.testIncrement();
 	test.testDecrement();
-
-	test.testNotEqualComparison();
 
 	test.testDereferenceOperator();
 	test.testArrowOperator();
@@ -47,6 +48,42 @@ namespace cpplog::utils::tree::unit_test {
 		Iterator it(box.begin());
 		
 		assert(&(*it) == e1.get());
+	}
+
+	void IndirectIteratorTest::testEqualComparison() const {
+		std::cout << std::source_location::current().file_name()
+			<< "(" << std::source_location::current().line() << ")"
+			<< ": Running testEqualComparison()" << std::endl;
+
+
+		using Element = std::unique_ptr<bool>;
+		using Container = std::vector<Element>;
+		using Iterator = IndirectIterator<Container::iterator>;
+
+		Container box;
+		box.push_back(std::make_unique<bool>(false));
+
+		Iterator it(box.begin());
+
+		assert(*it == false);
+	}
+
+	void IndirectIteratorTest::testNotEqualComparison() const {
+		std::cout << std::source_location::current().file_name()
+			<< "(" << std::source_location::current().line() << ")"
+			<< ": Running testNotEqualComparison()" << std::endl;
+
+
+		using Element = std::unique_ptr<bool>;
+		using Container = std::vector<Element>;
+		using Iterator = IndirectIterator<Container::iterator>;
+
+		Container box;
+		box.push_back(std::make_unique<bool>(false));
+
+		Iterator it(box.begin());
+
+		assert(*it != true);
 	}
 
 	void IndirectIteratorTest::testIncrement() const {
@@ -90,24 +127,6 @@ namespace cpplog::utils::tree::unit_test {
 		it--;
 
 		assert(*it == "Second");
-	}
-
-	void IndirectIteratorTest::testNotEqualComparison() const {
-		std::cout << std::source_location::current().file_name()
-			<< "(" << std::source_location::current().line() << ")"
-			<< ": Running testNotEqualComparison()" << std::endl;
-
-
-		using Element = std::unique_ptr<bool>;
-		using Container = std::vector<Element>;
-		using Iterator = IndirectIterator<Container::iterator>;
-
-		Container box;
-		box.push_back(std::make_unique<bool>(false));
-
-		Iterator it(box.begin());
-
-		assert(*it != true);
 	}
 
 	void IndirectIteratorTest::testDereferenceOperator() const {

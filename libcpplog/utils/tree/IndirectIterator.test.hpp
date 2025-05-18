@@ -14,6 +14,17 @@ namespace cpplog::utils::tree::unit_test {
 		void testConstruction() const;
 
 		/**
+		 * @brief Test equal comparison
+		 */
+
+		void testEqualComparison() const;
+
+		/**
+		 * @brief Test not equal comparison
+		 */
+		void testNotEqualComparison() const;
+
+		/**
 		 * @brief Test increment
 		 */
 		void testIncrement() const;
@@ -22,14 +33,6 @@ namespace cpplog::utils::tree::unit_test {
 		 * @brief Test decrement
 		 */
 		void testDecrement() const;
-
-		/**
-		 * @brief Test not equal comparison
-		 * 
-		 * @details
-		 * Equal comparison is tested with the increment and decrement tests.
-		 */
-		void testNotEqualComparison() const;
 
 		/**
 		 * @brief Test dereference operator

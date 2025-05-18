@@ -1,0 +1,21 @@
+@startuml utils-tree-class-diagram
+
+title utils tree class diagram
+
+class Node<T> {
+    == public ==
+    + Node(T)
+    --
+    + getId() : T
+    + add(Node<T>*) : void
+    --
+    + begin() : Node<T>::iterator
+    + end() : Node<T>::iterator
+    == private ==
+    - id : T
+    - childNodes : Node<T>[]
+}
+
+Node "*" o-- Node
+
+@enduml

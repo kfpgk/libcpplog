@@ -10,7 +10,7 @@ package logger {
     [LogLevel]
     [LogFormat]
     [LogComponent]
-    [LogStream]
+    [LogRequest]
 
     package decorator {
         [Decorator]
@@ -39,7 +39,7 @@ API ..> Log : <<import>>
 API ..> LogLevel : <<import>>
 API ..> LogFormat : <<import>>
 API ..> LogComponent : <<import>>
-API ..> LogStream : <<import>>
+API ..> LogRequest : <<import>>
 API ..> Debug : <<import>>
 
 @enduml

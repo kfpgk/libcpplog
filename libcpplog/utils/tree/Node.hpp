@@ -18,9 +18,14 @@ namespace cpplog::utils::tree {
 
 	public:
 		/**
+		 * @brief Type alias for the identifier of the node
+		 */
+		using Identifier = TIdentifier;
+
+		/**
 		 * @brief Type alias for the child container
 		 */
-		using ChildContainer = std::vector<Node<TIdentifier>>;
+		using ChildContainer = std::vector<Node<Identifier>>;
 
 		/**
 		 * @brief Type alias for the iterator for this class
@@ -43,7 +48,7 @@ namespace cpplog::utils::tree {
 		 * 
 		 * @param[in] id The identifier of the node
 		 */
-		Node(const TIdentifier& id) noexcept;
+		Node(const Identifier& id) noexcept;
 
 		/**
 		 * @brief Add a node as a child node by perferct forwarding
@@ -62,7 +67,7 @@ namespace cpplog::utils::tree {
 		 *
 		 * @return The identifier of the node
 		 */
-		const TIdentifier& getId() const noexcept;
+		const Identifier& getId() const noexcept;
 
 		/**
 		 * @brief Get the beginning of the child nodes container
@@ -108,7 +113,7 @@ namespace cpplog::utils::tree {
 		std::span<const Node> getChildNodes() const;
 
 	private:
-		const TIdentifier id; ///< The node's identifier
+		const Identifier id; ///< The node's identifier
 		ChildContainer childNodes; ///< The node's child nodes
 
 	};

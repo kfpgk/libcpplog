@@ -5,8 +5,8 @@ include("${libcpplog_cmake_code_dir}/set-install-dirs.cmake")
 
 add_library(libcpplog)
 
-# We want to install both release and debug build on Windows
-# Use postfix for unique file names
+# On Windows, install both release and debug builds of the library.
+# Use postfix to ensure unique file names
 if (WIN32)
     set_target_properties(libcpplog
         PROPERTIES 
@@ -16,7 +16,11 @@ endif()
 
 target_include_directories(libcpplog
     PUBLIC
+        # Use source tree include directories during the build phase 
+        # (for direct header access)
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
+        # Provide installed header path for downstream projects using this 
+        # target via CMake's install interface
         $<INSTALL_INTERFACE:${libcpplog_INSTALL_INCLUDEDIR}>
 )
 

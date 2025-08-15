@@ -32,6 +32,7 @@ if(BUILD_UNIT_TESTS)
     enable_testing()
 endif()
 
+add_subdirectory(cpp-algorithms)
+add_subdirectory(cpp-data-structures)
 add_subdirectory(debug)
 add_subdirectory(logger)
-add_subdirectory(utils)

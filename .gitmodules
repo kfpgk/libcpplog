@@ -1,0 +1,6 @@
+[submodule "libcpplog/external/cpp-data-structures"]
+	path = libcpplog/external/cpp-data-structures
+	url = https://github.com/kfpgk/cpp-data-structures.git
+[submodule "libcpplog/external/cpp-algorithms"]
+	path = libcpplog/external/cpp-algorithms
+	url = https://github.com/kfpgk/cpp-algorithms.git

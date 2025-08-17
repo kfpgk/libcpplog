@@ -1,0 +1,1 @@
+set(libcpplog_TARGETS libcpplog-targets)

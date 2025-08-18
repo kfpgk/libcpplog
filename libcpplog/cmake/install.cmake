@@ -1,4 +1,4 @@
-# Requires: lipcclog_INSTALL_xxx variables to be set in advance
+# Requires: libcpplog_INSTALL_xxx variables to be set in advance
 # Requires: libcpplog_TARGETS variable to be set in advance
 
 set(PUBLIC_HEADERS

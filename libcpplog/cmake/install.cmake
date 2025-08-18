@@ -17,15 +17,14 @@ install(TARGETS libcpplog
     LIBRARY DESTINATION "${libcpplog_INSTALL_LIBDIR}"
     ARCHIVE DESTINATION "${libcpplog_INSTALL_LIBDIR}"
     INCLUDES DESTINATION "${libcpplog_INSTALL_INCLUDEDIR}"
+    COMPONENT Runtime
 )
 
 foreach(header_file ${PUBLIC_HEADERS})
     get_filename_component(header_dir "${header_file}" DIRECTORY)
     install(
-        FILES 
-            "${header_file}"
-        DESTINATION 
-            "${libcpplog_INSTALL_INCLUDEDIR}/libcpplog/${header_dir}"
-        COMPONENT
-            Devel)
+        FILES "${header_file}"
+        DESTINATION "${libcpplog_INSTALL_INCLUDEDIR}/libcpplog/${header_dir}"
+        COMPONENT Devel
+    )
 endforeach()

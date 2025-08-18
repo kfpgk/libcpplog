@@ -14,10 +14,7 @@ configure_package_config_file(
 
 # Install config file to install tree
 install(
-  FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/cmake/${libcpplog_config_file}"
-  DESTINATION
-    "${libcpplog_INSTALL_CMAKECONFIGDIR}"
-  COMPONENT
-    Devel
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/cmake/${libcpplog_config_file}"
+    DESTINATION "${libcpplog_INSTALL_CMAKECONFIGDIR}"
+    COMPONENT CMakeConfig
 )

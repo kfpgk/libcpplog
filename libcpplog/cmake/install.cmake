@@ -2,13 +2,13 @@
 # Requires: libcpplog_TARGETS variable to be set in advance
 
 set(PUBLIC_HEADERS
-    debug/Debug.hpp
-    logger/Log.hpp
-    logger/Logger.hpp
-    logger/LogComponent.hpp
-    logger/LogFormat.hpp
-    logger/LogLevel.hpp
-    logger/LogRequest.hpp
+    "debug/Debug.hpp"
+    "logger/Log.hpp"
+    "logger/Logger.hpp"
+    "logger/LogComponent.hpp"
+    "logger/LogFormat.hpp"
+    "logger/LogLevel.hpp"
+    "logger/LogRequest.hpp"
 )
 
 install(TARGETS libcpplog 
@@ -20,10 +20,10 @@ install(TARGETS libcpplog
 )
 
 foreach(header_file ${PUBLIC_HEADERS})
-    get_filename_component(header_dir ${header_file} DIRECTORY)
+    get_filename_component(header_dir "${header_file}" DIRECTORY)
     install(
         FILES 
-            ${header_file} 
+            "${header_file}"
         DESTINATION 
             "${libcpplog_INSTALL_INCLUDEDIR}/libcpplog/${header_dir}"
         COMPONENT

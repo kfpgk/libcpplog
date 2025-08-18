@@ -2,6 +2,8 @@
 set(libcpplog_cmake_code_dir "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Set global variables needed for installation and packaging
+# Installation directories (esp. xxx_INSTALL_INCLUDEDIR) are also used by
+# consumers. Refer to target_include_directories()'s INSTALL_INTERFACE.
 include("${libcpplog_cmake_code_dir}/set-install-dirs.cmake")
 include("${libcpplog_cmake_code_dir}/set-targets-var.cmake")
 
@@ -19,7 +21,7 @@ target_include_directories(libcpplog
 
 # On Windows, install both release and debug builds of the library.
 # Use postfix to ensure unique file names
-if (WIN32)
+if(WIN32)
     set_target_properties(libcpplog
         PROPERTIES 
             DEBUG_POSTFIX "d"

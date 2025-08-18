@@ -9,9 +9,9 @@ export(EXPORT ${libcpplog_TARGETS}
 # Install the the targets file to the install tree
 install(EXPORT ${libcpplog_TARGETS}
     FILE
-        ${libcpplog_targets_file}
+        "${libcpplog_targets_file}"
     DESTINATION 
-        cmake
+        "${libcpplog_INSTALL_CMAKECONFIGDIR}"
     NAMESPACE 
         CPPLOG::
 )

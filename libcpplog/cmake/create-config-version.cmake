@@ -15,7 +15,7 @@ install(
     FILES 
         "${CMAKE_CURRENT_BINARY_DIR}/cmake/${libcpplog_config_version_file}"
     DESTINATION
-        .
+        "${libcpplog_INSTALL_CMAKECONFIGDIR}"
     COMPONENT
         Devel
 )

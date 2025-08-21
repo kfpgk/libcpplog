@@ -6,27 +6,26 @@ A C++ logging library.
 <a id="table-of-contents"></a>
 ## Table of Contents
 
-- [libcpplog](#libcpplog)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Features](#features)
-  - [Usage](#usage)
-    - [Headers](#headers)
-    - [Logging](#logging)
-    - [Debug](#debug)
-  - [Dependencies](#dependencies)
-  - [Build](#build)
-    - [Library](#library)
-    - [Tests](#tests)
-    - [Debug build](#debug-build)
-  - [Installation](#installation)
-    - [Windows](#windows)
-      - [Static release version](#static-release-version)
-      - [Static debug version](#static-debug-version)
-  - [Directory structure](#directory-structure)
-  - [Contribute](#contribute)
-  - [Credits](#credits)
-  - [License](#license)
+- [Table of Contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Features](#features)
+- [Usage](#usage)
+  - [Headers](#headers)
+  - [Logging](#logging)
+  - [Debug](#debug)
+- [Dependencies](#dependencies)
+- [Build](#build)
+  - [Library](#library)
+  - [Tests](#tests)
+  - [Debug build](#debug-build)
+- [Installation](#installation)
+  - [Windows](#windows)
+    - [Static release version](#static-release-version)
+    - [Static debug version](#static-debug-version)
+- [Directory structure](#directory-structure)
+- [Contribute](#contribute)
+- [Credits](#credits)
+- [License](#license)
 
 <a id="introduction"></a>
 ## Introduction
@@ -45,12 +44,17 @@ This repository holds the source code, documentation and tests for the `C++` log
 <a id="usage"></a>
 ## Usage
 
-The library consists of a `logger` package and a `debug` package.
+### CMake Integration
+
+The cmake target consists of three <b>components</b>:
+- <b>Runtime</b>: Contains the library binaries
+- <b>Devel</b>: Contains the public headers of the library
+- <b>CMakeConfig</b>: Contains the CMake configuration files for the library
 
 <a id="headers"></a>
 ### Headers
 
-The library provides the following headers.
+The library consists of a `logger` package and a `debug` package. They provide the following headers.
 
 ```cpp
 // Header for global logger object. This header includes the complete libcpplog logger functionality.
